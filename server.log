@@ -1,0 +1,180 @@
+[2026-04-14T07:17:52.388Z] Server running on http://localhost:3001
+[2026-04-14T07:19:43.474Z] Server running on http://localhost:3001
+[2026-04-14T07:21:05.273Z] Server running on http://localhost:3001
+[2026-04-14T07:21:51.379Z] Server running on http://localhost:3001
+[2026-04-14T07:22:09.138Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T07:22:09.817Z] Search error: Error: 403 Project `proj_IGVm3AP71ERytGRg12FzDBNR` does not have access to model `gpt-4o-mini`
+    at APIError.generate (D:\saintGobainSearch\Backend\node_modules\openai\core\error.js:51:20)
+    at OpenAI.makeStatusError (D:\saintGobainSearch\Backend\node_modules\openai\client.js:211:32)
+    at OpenAI.makeRequest (D:\saintGobainSearch\Backend\node_modules\openai\client.js:397:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.generateAnswer (D:\saintGobainSearch\Backend\ragService.js:161:22)
+    at async D:\saintGobainSearch\Backend\index.js:63:20
+[2026-04-14T07:22:58.649Z] Server running on http://localhost:3001
+[2026-04-14T07:23:17.171Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T07:23:17.817Z] Search error: Error: 403 Project `proj_IGVm3AP71ERytGRg12FzDBNR` does not have access to model `gpt-3.5-turbo`
+    at APIError.generate (D:\saintGobainSearch\Backend\node_modules\openai\core\error.js:51:20)
+    at OpenAI.makeStatusError (D:\saintGobainSearch\Backend\node_modules\openai\client.js:211:32)
+    at OpenAI.makeRequest (D:\saintGobainSearch\Backend\node_modules\openai\client.js:397:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.generateAnswer (D:\saintGobainSearch\Backend\ragService.js:161:22)
+    at async D:\saintGobainSearch\Backend\index.js:63:20
+[2026-04-14T07:23:54.707Z] Server running on http://localhost:3001
+[2026-04-14T07:24:23.209Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T07:25:39.331Z] Server running on http://localhost:3001
+[2026-04-14T07:29:01.343Z] Search request received: undefined
+[2026-04-14T07:30:08.251Z] Server running on http://localhost:3001
+[2026-04-14T08:34:24.642Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T08:35:52.784Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T08:36:43.343Z] Search request received: {"query":"Comment recalibrer ?"}
+[2026-04-14T08:37:51.726Z] Search request received: {"query":"hii"}
+[2026-04-14T08:37:56.295Z] Search request received: {"query":"hii"}
+[2026-04-14T08:44:56.188Z] Search request received: {"query":"Remplacement pare-brise"}
+[2026-04-14T08:51:32.687Z] Search request received: {"query":"Remplacement lunette arri"}
+[2026-04-14T08:53:41.877Z] Server running on http://localhost:3001
+[2026-04-14T08:59:00.710Z] Server running on http://localhost:3001
+[2026-04-14T08:59:39.826Z] Search request received: {"query":"hii"}
+[2026-04-14T08:59:49.113Z] Search request received: {"query":"hello"}
+[2026-04-14T09:00:00.337Z] Search request received: {"query":"services"}
+[2026-04-14T09:00:08.973Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T09:00:45.362Z] Server running on http://localhost:3001
+[2026-04-14T09:00:57.144Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T09:02:09.117Z] Server running on http://localhost:3001
+[2026-04-14T09:02:20.088Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T09:02:43.731Z] Server running on http://localhost:3001
+[2026-04-14T09:03:23.930Z] Search request received: {"query":"Comment réparer un impact ?"}
+[2026-04-14T09:05:26.900Z] Server running on http://localhost:3001
+[2026-04-14T09:05:47.181Z] Search request received: {"query":"C'est quoi le recalibrage ?"}
+[2026-04-14T09:10:10.208Z] Server running on http://localhost:3001
+[2026-04-14T09:10:59.545Z] Server running on http://localhost:3001
+[2026-04-14T09:15:24.211Z] Server running on http://localhost:3001
+[2026-04-14T09:20:34.070Z] Server running on http://localhost:3001
+[2026-04-14T09:21:45.789Z] Search request received: {"query":"Comment faire pour recalibrer mes caméras ADAS ?"}
+[2026-04-14T09:23:21.777Z] Search request received: {"query":"hii"}
+[2026-04-14T09:23:26.988Z] Search request received: {"query":"hello"}
+[2026-04-14T09:23:36.316Z] Search request received: {"query":"services"}
+[2026-04-14T09:23:37.188Z] Search request received: {"query":"services"}
+[2026-04-14T09:23:37.635Z] Search request received: {"query":"services"}
+[2026-04-14T09:23:37.827Z] Search request received: {"query":"services"}
+[2026-04-14T09:23:38.067Z] Search request received: {"query":"services"}
+[2026-04-14T09:24:47.219Z] Server running on http://localhost:3001
+[2026-04-14T09:36:24.902Z] Server running on http://localhost:3001
+[2026-04-14T09:37:16.679Z] Search request received: {"query":"Que faire pour un impact sur mon pare-brise ?"}
+[2026-04-14 15:13:11,362] Setup error: can't adapt type 'dict'
+[2026-04-14 15:13:37,614] Server running on http://localhost:3001
+[2026-04-14 15:13:37,679] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:3001
+ * Running on http://192.168.9.118:3001
+[2026-04-14 15:13:37,680] [33mPress CTRL+C to quit[0m
+[2026-04-14 15:13:37,684]  * Restarting with stat
+[2026-04-14 15:13:40,127] Server running on http://localhost:3001
+[2026-04-14 15:13:40,137]  * Debugger is active!
+[2026-04-14 15:13:40,140]  * Debugger PIN: 666-389-205
+[2026-04-14T09:43:55.180Z] Search request received: {"query":"Que faire pour un impact sur mon pare-brise ?"}
+[2026-04-14 15:51:40,460]  * Detected change in 'D:\\saintGobainSearch\\Backend\\ragService.py', reloading
+[2026-04-14 15:51:40,708]  * Restarting with stat
+[2026-04-14 15:51:44,262] Server running on http://localhost:3001
+[2026-04-14 15:51:44,279]  * Debugger is active!
+[2026-04-14 15:51:44,283]  * Debugger PIN: 666-389-205
+[2026-04-14 15:53:44,004] Server running on http://localhost:3001
+[2026-04-14 15:53:44,025] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:3001
+ * Running on http://192.168.9.118:3001
+[2026-04-14 15:53:44,025] [33mPress CTRL+C to quit[0m
+[2026-04-14 15:53:44,026]  * Restarting with stat
+[2026-04-14 15:53:46,961] Server running on http://localhost:3001
+[2026-04-14 15:53:46,973]  * Debugger is active!
+[2026-04-14 15:53:46,980]  * Debugger PIN: 666-389-205
+[2026-04-14T10:24:48.663Z] Search request received: {"query":"Qu'est-ce que France Pare-Brise ?"}
+[2026-04-14T10:28:24.131Z] Search request received: {"query":"Pourquoi recalibrer les cam"}
+[2026-04-14T10:28:42.581Z] Search request received: {"query":"Pourquoi recalibrer les cameras ?"}
+[2026-04-14T10:30:39.154Z] Search request received: {"query":"Pourquoi recalibrer Pourquoi recalibrer les camles cameras ?"}
+[2026-04-14T10:30:53.400Z] Search request received: {"query":"Pourquoi recalibrer les cameras ?"}
+[2026-04-14T10:32:39.097Z] Search request received: {"query":"hii"}
+[2026-04-14T10:40:09.432Z] Search request received: {"query":"Quelle est l'expertise de France Pare-Brise ?"}
+[2026-04-14T10:41:20.811Z] Search request received: {"query":"Quelle "}
+[2026-04-14T10:41:56.761Z] Search request received: {"query":"Qu'est-ce que France Pare-Brise ?"}
+[2026-04-14T10:45:17.863Z] Search request received: {"query":"Qu'est-ce que France Pare-Brise ?"}
+[2026-04-14T10:46:20.563Z] Search request received: {"query":"Quels sont vos services ?"}
+[2026-04-14 16:18:25,078]  * Detected change in 'D:\\saintGobainSearch\\Backend\\ragService.py', reloading
+[2026-04-14 16:18:25,296]  * Restarting with stat
+[2026-04-14 16:18:29,342] Server running on http://localhost:3001
+[2026-04-14 16:18:29,359]  * Debugger is active!
+[2026-04-14 16:18:29,365]  * Debugger PIN: 666-389-205
+[2026-04-14T10:50:43.244Z] Search request received: {"query":"Comment r"}
+[2026-04-14T10:51:17.867Z] Search request received: {"query":"Comment reparer un impact ?"}
+[2026-04-14T10:55:06.066Z] Search request received: {"query":"Comment r"}
+[2026-04-14T10:55:27.866Z] Search request received: {"query":"Comment reparer un impact ?"}
+[2026-04-14T10:56:12.717Z] Search request received: {"query":"Comment reparer un impact ?"}
+[2026-04-14 16:27:26,149]  * Detected change in 'D:\\saintGobainSearch\\Backend\\ragService.py', reloading
+[2026-04-14 16:27:26,426]  * Restarting with stat
+[2026-04-14 16:27:31,199] Server running on http://localhost:3001
+[2026-04-14 16:27:31,218]  * Debugger is active!
+[2026-04-14 16:27:31,226]  * Debugger PIN: 666-389-205
+[2026-04-14T10:58:30.482Z] Search request received: {"query":"Comment r"}
+[2026-04-14T10:58:47.299Z] Search request received: {"query":"Comment reparer un impact ?"}
+[2026-04-14 16:30:11,223]  * Detected change in 'D:\\saintGobainSearch\\Backend\\ragService.py', reloading
+[2026-04-14 16:30:11,511]  * Restarting with stat
+[2026-04-14 16:30:15,701] Server running on http://localhost:3001
+[2026-04-14 16:30:15,717]  * Debugger is active!
+[2026-04-14 16:30:15,724]  * Debugger PIN: 666-389-205
+[2026-04-14T11:00:51.531Z] Search request received: {"query":"Comment r"}
+[2026-04-14T11:01:07.882Z] Search request received: {"query":"Comment reparer un impact ?"}
+[2026-04-14T11:03:31.880Z] Search request received: {"query":"Qu'est-ce que France Pare-Brise ?"}
+[2026-04-14T11:07:04.401Z] Search request received: {"query":"recalibrage cam"}
+[2026-04-14T11:07:17.373Z] Search request received: {"query":"recalibrage camera"}
+[2026-04-14T11:07:49.610Z] Search request received: {"query":"test"}
+[2026-04-14T11:08:43.085Z] Search request received: {"query":"prix replacement pare-brise"}
+[2026-04-14T11:11:02.361Z] Search request received: {"query":"Impact Pare-brise"}
+[2026-04-14T11:13:36.664Z] Search request received: {"query":"Impact Pare-brise"}
+[2026-04-14T11:17:45.933Z] Search request received: {"query":"Impact Pare-brise"}
+[2026-04-14T11:18:02.616Z] Search request received: {"query":"Comment prendre RDV ?"}
+[2026-04-14T11:18:28.991Z] Search request received: {"query":"Impact Pare-brise"}
+[2026-04-14T11:18:44.883Z] Search request received: {"query":"Comment prendre RDV ?"}
+[2026-04-14T11:23:47.098Z] Search request received: {"query":"Remplacement"}
+[2026-04-14T11:24:19.596Z] Search request received: {"query":"Comment prendre RDV ?"}
+[2026-04-14T11:25:55.645Z] Search request received: {"query":"Système ADAS"}
+[2026-04-14T11:27:15.613Z] Search request received: {"query":"Impact Pare-brise"}
+[2026-04-14T11:32:36.872Z] Search request received: {"query":"Comment reparer un impact ?"}
+[2026-04-14T11:33:54.579Z] Search request received: {"query":"hii"}
+[2026-04-14T12:12:18.002Z] Search request received: {"query":"Remplacement de pare-brise"}
+[2026-04-14T12:22:54.904Z] Search request received: {"query":"Remplacement"}
+[2026-04-14T12:23:55.497Z] Search request received: {"query":"Prix"}
+[2026-04-14T12:38:49.676Z] Search request received: {"query":"hii"}
+[2026-04-14 18:15:54,494] Server running on http://localhost:3001
+[2026-04-14 18:15:54,535] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:3001
+ * Running on http://192.168.9.118:3001
+[2026-04-14 18:15:54,535] [33mPress CTRL+C to quit[0m
+[2026-04-14 18:15:54,538]  * Restarting with stat
+[2026-04-14 18:15:58,866] Server running on http://localhost:3001
+[2026-04-14 18:15:58,885]  * Debugger is active!
+[2026-04-14 18:15:58,893]  * Debugger PIN: 666-389-205
+[2026-04-14T12:47:22.302Z] Search request received: {"query":"Impact pare-brise"}
+[2026-04-14T12:54:23.025Z] Search request received: {"query":"remplacement de pare-brise"}
+[2026-04-14T12:55:36.746Z] Search request received: {"query":"Quel est le co"}
+[2026-04-14T12:56:02.268Z] Search request received: {"query":"Quels sont vos services ?"}
+[2026-04-14T12:56:45.144Z] Search request received: {"query":"pare-brise"}
+[2026-04-14T12:57:21.940Z] Search request received: {"query":"assurance"}
+[2026-04-14T12:57:48.369Z] Search request received: {"query":"Prise de rendez-vous"}
+[2026-04-14T12:58:21.869Z] Search request received: {"query":"services"}
+[2026-04-14T12:58:56.138Z] Search request received: {"query":"impact"}
+[2026-04-14 18:31:39,029]  * Detected change in 'D:\\saintGobainSearch\\Backend\\app.py', reloading
+[2026-04-14 18:31:39,294]  * Detected change in 'D:\\saintGobainSearch\\Backend\\app.py', reloading
+[2026-04-14 18:31:39,587]  * Restarting with stat
+[2026-04-14 18:31:39,900]  * Restarting with stat
+[2026-04-14 18:31:41,805] Setup error: relation "document_chunks" does not exist
+LINE 1: SELECT COUNT(*) as count FROM document_chunks
+                                      ^
+
+[2026-04-14 18:31:44,746] Server running on http://localhost:3001
+[2026-04-14 18:31:44,765]  * Debugger is active!
+[2026-04-14 18:31:44,773]  * Debugger PIN: 666-389-205
+[2026-04-14T13:03:20.487Z] Search request received: {"query":"Prise de rendez-vous"}
+[2026-04-14T13:19:58.103Z] Search request received: {"query":"hii"}
+[2026-04-14T13:20:29.992Z] Search request received: {"query":"windshield replacement"}
+[2026-04-14T13:36:14.736Z] Search request received: {"query":"Engin Agricole"}
+[2026-04-14T13:36:44.901Z] Search request received: {"query":"Engin Agricole"}
