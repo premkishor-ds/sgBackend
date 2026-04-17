@@ -45,6 +45,12 @@ def serve_test():
     test_path = os.path.join(os.path.dirname(__file__), 'testapi.html')
     return send_from_directory(os.path.dirname(__file__), 'testapi.html')
 
+@app.route('/suggestions', methods=['GET'])
+def get_suggestions():
+    """Return dynamic suggested search queries from backend"""
+    suggestions = ragService.get_dynamic_suggestions()
+    return jsonify({'suggestions': suggestions})
+
 @app.route('/search', methods=['POST'])
 def search():
     log_message(f'Search request received: {request.get_json()}')
@@ -88,11 +94,11 @@ def setup():
         print('Ingestion complete.')
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 3001))
+    port = int(os.getenv('PORT', 8000))
     
     try:
         setup()
         log_message(f'Server running on http://localhost:{port}')
-        app.run(host='0.0.0.0', port=port, debug=True)
+        app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
     except Exception as err:
         log_message(f'Setup error: {err}')
