@@ -50,17 +50,23 @@ def process_data(items):
                     # Skip technical keys and metadata we don't want in the text
                     if key.startswith('_') or key in ['metadata', 'id', 'created_at', 'search_vector', 'slug', 'thumbnails', 'url', 'image', 'height', 'width', 'locale', 'primary_key', 'image_url', 'favicon']:
                         continue
+                        
+                    if key in ['hours', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']:
+                        text_parts.append(f"{key.capitalize()}:")
+                        
                     if isinstance(val, (dict, list)):
                         walk_obj(val)
                     elif val and not isinstance(val, bool):
                         str_val = str(val).strip()
-                        # Skip URLs, images, and purely numeric/technical short strings
+                        # Skip URLs, images
                         if (str_val.startswith(('http', '//')) or 
-                            str_val.endswith(('.png', '.jpg', '.jpeg', '.webp', '.pdf')) or
-                            re.match(r'^[0-9\s\-\.\:\/]+$', str_val) or # Just numbers or separators
-                            len(str_val) < 4):
+                            str_val.endswith(('.png', '.jpg', '.jpeg', '.webp', '.pdf'))):
                             continue
-                        text_parts.append(str_val)
+                            
+                        if key in ['start', 'end', 'date'] or ':' in str_val:
+                            text_parts.append(f"{key} {str_val}")
+                        elif not (re.match(r'^[0-9\s\-\.\/]+$', str_val) or len(str_val) < 3):
+                            text_parts.append(str_val)
             elif isinstance(obj, list):
                 for item_in_list in obj:
                     walk_obj(item_in_list)
@@ -111,9 +117,35 @@ def store_in_db(chunk, metadata):
     sql = 'INSERT INTO document_chunks (content, metadata) VALUES (%s, %s)'
     query(sql, [chunk, json.dumps(metadata)])
 
+def extract_search_keywords(query_text):
+    """Translate and optimize search query for Portuguese/English database"""
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an assistant that optimizes search queries for a PostgreSQL full-text search engine. The database contains documents in English and Portuguese. The user will ask a question (likely in French). Extract the core intent, translate it to English and Portuguese keywords, and return them joined by ' OR '. Include both noun and verb forms if applicable (e.g., marcar OR marcação). Do not use quotes or special characters. \nExample input: 'Comment prendre rendez-vous ?'\nExample output: appointment OR marcar OR marcação OR schedule"
+                },
+                {
+                    "role": "user",
+                    "content": query_text
+                }
+            ],
+            max_tokens=50,
+            temperature=0.3
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as err:
+        print(f"Error extracting keywords: {err}")
+        return query_text
+
 def search_similar(query_text, limit=5):
     """Search for similar chunks using full-text search"""
     try:
+        keywords = extract_search_keywords(query_text)
+        print(f"RAG SERVICE: Translated query to keywords: {keywords}")
+        
         sql = '''
             SELECT content, metadata, ts_rank_cd(search_vector, websearch_to_tsquery('simple', %s)) AS similarity
             FROM document_chunks
@@ -122,12 +154,29 @@ def search_similar(query_text, limit=5):
             ORDER BY similarity DESC
             LIMIT %s
         '''
-        result = query(sql, [query_text, query_text, query_text, limit])
+        result = query(sql, [keywords, keywords, query_text, limit])
         
         if len(result) == 0:
-            print('No direct matches found for query.')
-            return []
+            print('No direct matches found for query. Trying fallback search...')
+            # Fallback: search words individually with ILIKE
+            words = [w for w in keywords.split() if w.upper() != 'OR' and len(w) > 2]
+            if len(words) > 0:
+                fallback_conditions = " OR ".join(["content ILIKE %s"] * len(words))
+                fallback_params = [f"%{w}%" for w in words]
+                
+                fallback_sql = f'''
+                    SELECT content, metadata, 0.1 AS similarity
+                    FROM document_chunks
+                    WHERE {fallback_conditions}
+                    LIMIT %s
+                '''
+                fallback_params.append(limit)
+                result = query(fallback_sql, fallback_params)
         
+        if len(result) == 0:
+            print('Still no matches found.')
+            return []
+            
         return result
     except Exception as err:
         print(f'DATABASE ERROR in search_similar: {err}')

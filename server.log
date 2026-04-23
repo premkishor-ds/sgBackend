@@ -841,3 +841,202 @@ LINE 1: SELECT COUNT(*) as count FROM document_chunks
 [2026-04-17 12:11:31,862] Search request received: {'query': 'Glassdrive Porto'}
 [2026-04-17 12:11:36,789] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 [2026-04-17 12:11:36,804] 127.0.0.1 - - [17/Apr/2026 12:11:36] "POST /search HTTP/1.1" 200 -
+[2026-04-21 10:45:44,011] Server running on http://localhost:8001
+[2026-04-21 10:45:44,050] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8001
+ * Running on http://192.168.9.118:8001
+[2026-04-21 10:45:44,050] [33mPress CTRL+C to quit[0m
+[2026-04-21 10:51:29,663] Server running on http://localhost:8000
+[2026-04-21 10:51:29,688] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-21 10:51:29,688] [33mPress CTRL+C to quit[0m
+[2026-04-21 10:53:30,685] Search request received: {'query': 'What is Saint-Gobain?'}
+[2026-04-21 10:53:30,794] 127.0.0.1 - - [21/Apr/2026 10:53:30] "POST /search HTTP/1.1" 200 -
+[2026-04-21 10:53:59,482] Search request received: {'query': 'Glassdrive Porto'}
+[2026-04-21 10:54:01,710] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 403 Forbidden"
+[2026-04-21 10:54:01,714] 127.0.0.1 - - [21/Apr/2026 10:54:01] "POST /search HTTP/1.1" 200 -
+[2026-04-21 10:56:24,999] Server running on http://localhost:8000
+[2026-04-21 10:56:25,029] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-21 10:56:25,029] [33mPress CTRL+C to quit[0m
+[2026-04-21 10:56:47,530] Search request received: {'query': 'Glassdrive Porto'}
+[2026-04-21 10:56:52,751] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-21 10:56:52,767] 127.0.0.1 - - [21/Apr/2026 10:56:52] "POST /search HTTP/1.1" 200 -
+[2026-04-21 10:58:26,114] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-21 10:58:26,121] 127.0.0.1 - - [21/Apr/2026 10:58:26] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-21 10:58:37,003] 127.0.0.1 - - [21/Apr/2026 10:58:37] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 10:58:37,318] Search request received: {'query': 'Glassdrive Porto'}
+[2026-04-21 10:58:42,386] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-21 10:58:42,393] 127.0.0.1 - - [21/Apr/2026 10:58:42] "POST /search HTTP/1.1" 200 -
+[2026-04-21 11:00:28,132] 127.0.0.1 - - [21/Apr/2026 11:00:28] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 11:00:28,395] Search request received: {'query': 'réparation pare-brise 30 minutes'}
+[2026-04-21 11:00:28,633] 127.0.0.1 - - [21/Apr/2026 11:00:28] "POST /search HTTP/1.1" 200 -
+[2026-04-21 11:00:55,532] 127.0.0.1 - - [21/Apr/2026 11:00:55] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 11:00:55,851] Search request received: {'query': 'Comment puis-je prendre rendez-vous ?'}
+[2026-04-21 11:00:56,113] 127.0.0.1 - - [21/Apr/2026 11:00:56] "POST /search HTTP/1.1" 200 -
+[2026-04-21 11:01:13,476] 127.0.0.1 - - [21/Apr/2026 11:01:13] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 11:01:13,807] Search request received: {'query': 'Quels sont les services de Glassdrive ?'}
+[2026-04-21 11:01:14,064] 127.0.0.1 - - [21/Apr/2026 11:01:14] "POST /search HTTP/1.1" 200 -
+[2026-04-21 11:01:33,720] 127.0.0.1 - - [21/Apr/2026 11:01:33] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 11:01:34,051] Search request received: {'query': 'Glassdrive Porto'}
+[2026-04-21 11:01:42,653] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-21 11:01:42,671] 127.0.0.1 - - [21/Apr/2026 11:01:42] "POST /search HTTP/1.1" 200 -
+[2026-04-21 11:02:00,765] 127.0.0.1 - - [21/Apr/2026 11:02:00] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 11:02:01,084] Search request received: {'query': 'Quels sont les services de Glassdrive ?'}
+[2026-04-21 11:02:01,424] 127.0.0.1 - - [21/Apr/2026 11:02:01] "POST /search HTTP/1.1" 200 -
+[2026-04-21 15:25:01,654] Server running on http://localhost:8000
+[2026-04-21 15:25:01,716] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-21 15:25:01,716] [33mPress CTRL+C to quit[0m
+[2026-04-21 15:25:46,580] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-21 15:25:46,619] 127.0.0.1 - - [21/Apr/2026 15:25:46] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-21 15:25:46,958] 127.0.0.1 - - [21/Apr/2026 15:25:46] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 15:25:47,280] Search request received: {'query': 'What is Saint-Gobain?'}
+[2026-04-21 15:25:47,553] 127.0.0.1 - - [21/Apr/2026 15:25:47] "POST /search HTTP/1.1" 200 -
+[2026-04-21 15:26:07,721] 127.0.0.1 - - [21/Apr/2026 15:26:07] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 15:26:08,045] Search request received: {'query': 'Quels services proposez-vous ?'}
+[2026-04-21 15:26:08,234] 127.0.0.1 - - [21/Apr/2026 15:26:08] "POST /search HTTP/1.1" 200 -
+[2026-04-21 15:28:19,410] 127.0.0.1 - - [21/Apr/2026 15:28:19] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-21 15:28:19,667] Search request received: {'query': 'Drive Clean'}
+[2026-04-21 15:28:29,266] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-21 15:28:29,274] 127.0.0.1 - - [21/Apr/2026 15:28:29] "POST /search HTTP/1.1" 200 -
+[2026-04-23 10:39:37,948] Server running on http://localhost:8000
+[2026-04-23 10:39:37,989] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-23 10:39:37,990] [33mPress CTRL+C to quit[0m
+[2026-04-23 10:40:10,421] Server running on http://localhost:8000
+[2026-04-23 10:40:10,443] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-23 10:40:10,443] [33mPress CTRL+C to quit[0m
+[2026-04-23 10:40:10,759] 127.0.0.1 - - [23/Apr/2026 10:40:10] "HEAD / HTTP/1.1" 200 -
+[2026-04-23 10:40:10,765] 127.0.0.1 - - [23/Apr/2026 10:40:10] "GET / HTTP/1.1" 200 -
+[2026-04-23 10:40:40,650] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 10:40:40,675] 127.0.0.1 - - [23/Apr/2026 10:40:40] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-23 10:40:48,255] 127.0.0.1 - - [23/Apr/2026 10:40:48] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 10:40:48,574] Search request received: {'query': 'Saint-Gobain'}
+[2026-04-23 10:40:48,867] 127.0.0.1 - - [23/Apr/2026 10:40:48] "POST /search HTTP/1.1" 200 -
+[2026-04-23 10:41:05,588] 127.0.0.1 - - [23/Apr/2026 10:41:05] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 10:41:05,914] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 10:41:06,223] 127.0.0.1 - - [23/Apr/2026 10:41:06] "POST /search HTTP/1.1" 200 -
+[2026-04-23 10:42:06,662] 127.0.0.1 - - [23/Apr/2026 10:42:06] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 10:42:06,931] Search request received: {'query': 'hii'}
+[2026-04-23 10:42:07,064] 127.0.0.1 - - [23/Apr/2026 10:42:07] "POST /search HTTP/1.1" 200 -
+[2026-04-23 10:42:08,769] Search request received: {'query': 'Comment puis-je prendre rendez-vous ?'}
+[2026-04-23 10:42:08,916] 127.0.0.1 - - [23/Apr/2026 10:42:08] "POST /search HTTP/1.1" 200 -
+[2026-04-23 10:42:10,845] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 10:42:10,929] 127.0.0.1 - - [23/Apr/2026 10:42:10] "POST /search HTTP/1.1" 200 -
+[2026-04-23 11:56:21,405] Search request received: {'query': 'Glassdrive Miranda'}
+[2026-04-23 11:56:25,960] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 11:56:25,968] 127.0.0.1 - - [23/Apr/2026 11:56:25] "POST /search HTTP/1.1" 200 -
+[2026-04-23 11:58:15,562] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 11:58:15,661] 127.0.0.1 - - [23/Apr/2026 11:58:15] "POST /search HTTP/1.1" 200 -
+[2026-04-23 11:58:25,010] Server running on http://localhost:8000
+[2026-04-23 11:58:25,057] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-23 11:58:25,059] [33mPress CTRL+C to quit[0m
+[2026-04-23 11:58:47,973] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 11:58:48,046] 127.0.0.1 - - [23/Apr/2026 11:58:48] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:01:58,205] Server running on http://localhost:8000
+[2026-04-23 12:01:58,231] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-23 12:01:58,232] [33mPress CTRL+C to quit[0m
+[2026-04-23 12:04:15,627] Search request received: {'query': 'Comment puis-je prendre rendez-vous ?'}
+[2026-04-23 12:04:15,704] 127.0.0.1 - - [23/Apr/2026 12:04:15] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:06:08,110] Server running on http://localhost:8000
+[2026-04-23 12:06:08,132] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-23 12:06:08,132] [33mPress CTRL+C to quit[0m
+[2026-04-23 12:42:39,460] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:42:39,467] 127.0.0.1 - - [23/Apr/2026 12:42:39] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-23 12:42:44,685] 127.0.0.1 - - [23/Apr/2026 12:42:44] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:42:45,007] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 12:42:45,326] 127.0.0.1 - - [23/Apr/2026 12:42:45] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:43:26,739] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:43:26,743] 127.0.0.1 - - [23/Apr/2026 12:43:26] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-23 12:43:32,816] 127.0.0.1 - - [23/Apr/2026 12:43:32] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:43:33,089] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 12:43:33,415] 127.0.0.1 - - [23/Apr/2026 12:43:33] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:43:50,585] 127.0.0.1 - - [23/Apr/2026 12:43:50] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:43:50,904] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 12:43:51,187] 127.0.0.1 - - [23/Apr/2026 12:43:51] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:44:11,971] 127.0.0.1 - - [23/Apr/2026 12:44:11] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:44:12,306] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 12:44:12,578] 127.0.0.1 - - [23/Apr/2026 12:44:12] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:44:46,216] 127.0.0.1 - - [23/Apr/2026 12:44:46] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:44:46,537] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 12:44:46,836] 127.0.0.1 - - [23/Apr/2026 12:44:46] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:49:16,507] Server running on http://localhost:8000
+[2026-04-23 12:49:16,553] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-04-23 12:49:16,553] [33mPress CTRL+C to quit[0m
+[2026-04-23 12:49:49,958] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:49:50,000] 127.0.0.1 - - [23/Apr/2026 12:49:50] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-23 12:49:58,710] 127.0.0.1 - - [23/Apr/2026 12:49:58] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:49:59,042] Search request received: {'query': 'Quels sont vos horaires ?'}
+[2026-04-23 12:50:00,078] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:50:04,049] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:50:04,055] 127.0.0.1 - - [23/Apr/2026 12:50:04] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:50:39,331] 127.0.0.1 - - [23/Apr/2026 12:50:39] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:50:39,647] Search request received: {'query': "Est-il nécessaire de prendre rendez-vous à l'avance ?"}
+[2026-04-23 12:50:41,638] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:50:45,335] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:50:45,342] 127.0.0.1 - - [23/Apr/2026 12:50:45] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:51:37,747] 127.0.0.1 - - [23/Apr/2026 12:51:37] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:51:38,064] Search request received: {'query': 'mahatma gandhi'}
+[2026-04-23 12:51:38,909] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:51:39,079] 127.0.0.1 - - [23/Apr/2026 12:51:39] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:51:53,321] 127.0.0.1 - - [23/Apr/2026 12:51:53] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:51:53,636] Search request received: {'query': 'services'}
+[2026-04-23 12:51:54,423] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:52:03,316] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:52:03,320] 127.0.0.1 - - [23/Apr/2026 12:52:03] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:52:13,001] 127.0.0.1 - - [23/Apr/2026 12:52:13] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:52:13,318] Search request received: {'query': 'all locations'}
+[2026-04-23 12:52:14,507] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:52:21,931] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:52:21,934] 127.0.0.1 - - [23/Apr/2026 12:52:21] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:52:41,315] 127.0.0.1 - - [23/Apr/2026 12:52:41] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:52:41,635] Search request received: {'query': 'Y a-t-il des promotions ou des offres spéciales en cours ?'}
+[2026-04-23 12:52:43,014] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:52:46,526] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:52:46,540] 127.0.0.1 - - [23/Apr/2026 12:52:46] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:53:06,226] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:53:06,227] 127.0.0.1 - - [23/Apr/2026 12:53:06] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-23 12:53:06,322] 127.0.0.1 - - [23/Apr/2026 12:53:06] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:53:06,633] Search request received: {'query': 'hii'}
+[2026-04-23 12:53:07,263] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:53:10,874] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:53:10,900] 127.0.0.1 - - [23/Apr/2026 12:53:10] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:54:45,430] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:54:45,432] 127.0.0.1 - - [23/Apr/2026 12:54:45] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-23 12:54:46,652] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:54:46,657] 127.0.0.1 - - [23/Apr/2026 12:54:46] "GET /suggestions HTTP/1.1" 200 -
+[2026-04-23 12:55:35,138] 127.0.0.1 - - [23/Apr/2026 12:55:35] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:55:35,402] Search request received: {'query': 'Meilleurs services de remplacement de vitres'}
+[2026-04-23 12:55:36,556] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:55:41,981] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:55:41,984] 127.0.0.1 - - [23/Apr/2026 12:55:41] "POST /search HTTP/1.1" 200 -
+[2026-04-23 12:55:45,154] 127.0.0.1 - - [23/Apr/2026 12:55:45] "OPTIONS /search HTTP/1.1" 200 -
+[2026-04-23 12:55:45,466] Search request received: {'query': 'Quels types de véhicules pouvez-vous servir pour le remplacement de vitres ?'}
+[2026-04-23 12:55:46,409] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:55:51,648] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-04-23 12:55:51,652] 127.0.0.1 - - [23/Apr/2026 12:55:51] "POST /search HTTP/1.1" 200 -
