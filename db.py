@@ -36,12 +36,13 @@ class Database:
             # Drop table if it exists to refresh the search_vector definition
             self.query('DROP TABLE IF EXISTS document_chunks;')
             
-            # Create table with full-text search
+            # Create table with full-text search and embeddings
             create_table_query = '''
                 CREATE TABLE IF NOT EXISTS document_chunks (
                     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                     content TEXT NOT NULL,
                     metadata JSONB,
+                    embedding double precision[],
                     search_vector tsvector GENERATED ALWAYS AS (to_tsvector('simple', content)) STORED,
                     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
                 );

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, Response
 from flask_cors import CORS
 import os
 import sys
@@ -8,7 +8,7 @@ from db import init_db, query
 import ragService
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 # Setup logging
 log_file = os.path.join(os.path.dirname(__file__), 'server.log')
@@ -48,7 +48,9 @@ def serve_test():
 @app.route('/suggestions', methods=['GET'])
 def get_suggestions():
     """Return dynamic suggested search queries from backend"""
-    suggestions = ragService.get_dynamic_suggestions()
+    # Optional context: last user query to generate conversation-aware suggestions
+    context_query = request.args.get('context', '').strip()
+    suggestions = ragService.get_dynamic_suggestions(context_query=context_query if context_query else None)
     return jsonify({'suggestions': suggestions})
 
 @app.route('/search', methods=['POST'])
@@ -65,11 +67,19 @@ def search():
         # Retrieval
         relevant_chunks = ragService.search_similar(query_text, 5)
         
-        # Generation
-        result = ragService.generate_answer(query_text, relevant_chunks)
-        print(f"BACKEND DEBUG: Search Result: {result}")
+        # Relevance gate: if the top result similarity is below threshold,
+        # the query is off-topic — pass empty chunks so we return a refusal
+        # without ever calling the LLM
+        RELEVANCE_THRESHOLD = 0.28
+        if relevant_chunks and relevant_chunks[0].get('similarity', 0) < RELEVANCE_THRESHOLD:
+            log_message(f"Off-topic query rejected (best similarity: {relevant_chunks[0].get('similarity', 0):.3f}): {query_text}")
+            relevant_chunks = []
         
-        return jsonify(result)
+        # Stream Generation
+        return Response(
+            ragService.generate_answer_stream(query_text, relevant_chunks),
+            mimetype='text/event-stream'
+        )
     except Exception as err:
         log_message(f'Search error: {err}')
         return jsonify({'error': 'Failed to process request'}), 500
@@ -89,7 +99,8 @@ def setup():
         for item in processed_items:
             chunks = ragService.chunk_text(item['text'])
             for chunk in chunks:
-                ragService.store_in_db(chunk, item['metadata'])
+                emb = ragService.get_embedding(chunk)
+                ragService.store_in_db(chunk, item['metadata'], emb)
         
         print('Ingestion complete.')
 
