@@ -62,11 +62,12 @@ def search():
         return jsonify({'error': 'Query is required'}), 400
     
     query_text = data['query']
-    
+    location = data.get('location')  # Optional: { lat: float, lng: float }
+
     try:
         # Retrieval
         relevant_chunks = ragService.search_similar(query_text, 5)
-        
+
         # Relevance gate: if the top result similarity is below threshold,
         # the query is off-topic — pass empty chunks so we return a refusal
         # without ever calling the LLM
@@ -74,10 +75,10 @@ def search():
         if relevant_chunks and relevant_chunks[0].get('similarity', 0) < RELEVANCE_THRESHOLD:
             log_message(f"Off-topic query rejected (best similarity: {relevant_chunks[0].get('similarity', 0):.3f}): {query_text}")
             relevant_chunks = []
-        
+
         # Stream Generation
         return Response(
-            ragService.generate_answer_stream(query_text, relevant_chunks),
+            ragService.generate_answer_stream(query_text, relevant_chunks, location=location),
             mimetype='text/event-stream'
         )
     except Exception as err:

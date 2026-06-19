@@ -77,3 +77,83 @@
 [2026-06-19 12:11:45,331] Search request received: {'query': 'location near me'}
 [2026-06-19 12:11:45,569] 127.0.0.1 - - [19/Jun/2026 12:11:45] "POST /search HTTP/1.1" 200 -
 [2026-06-19 12:11:52,139] 127.0.0.1 - - [19/Jun/2026 12:11:52] "GET /suggestions?context=location%20near%20me HTTP/1.1" 200 -
+[2026-06-19 12:14:51,580] 127.0.0.1 - - [19/Jun/2026 12:14:51] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:17:18,999] Server running on http://localhost:8000
+[2026-06-19 12:17:19,043] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 12:17:19,043] [33mPress CTRL+C to quit[0m
+[2026-06-19 12:18:02,747] 127.0.0.1 - - [19/Jun/2026 12:18:02] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:18:04,650] 127.0.0.1 - - [19/Jun/2026 12:18:04] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:18:04,960] Search request received: {'query': 'Où se trouve Glassdrive Oliveira de Azeméis ?', 'location': None}
+[2026-06-19 12:18:05,192] 127.0.0.1 - - [19/Jun/2026 12:18:05] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:18:11,134] 127.0.0.1 - - [19/Jun/2026 12:18:11] "GET /suggestions?context=Où%20se%20trouve%20Glassdrive%20Oliveira%20de%20Azeméis%20? HTTP/1.1" 200 -
+[2026-06-19 12:22:04,960] Server running on http://localhost:8000
+[2026-06-19 12:22:05,014] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 12:22:05,014] [33mPress CTRL+C to quit[0m
+[2026-06-19 12:24:00,594] 127.0.0.1 - - [19/Jun/2026 12:24:00] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:24:04,170] 127.0.0.1 - - [19/Jun/2026 12:24:04] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:24:04,478] Search request received: {'query': 'hello', 'location': None}
+[2026-06-19 12:24:05,292] 127.0.0.1 - - [19/Jun/2026 12:24:05] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:24:09,930] 127.0.0.1 - - [19/Jun/2026 12:24:09] "GET /suggestions?context=hello HTTP/1.1" 200 -
+[2026-06-19 12:24:12,248] 127.0.0.1 - - [19/Jun/2026 12:24:12] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:24:12,493] Search request received: {'query': 'Do you need information about our locations?', 'location': None}
+[2026-06-19 12:24:14,611] 127.0.0.1 - - [19/Jun/2026 12:24:14] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:24:33,314] 127.0.0.1 - - [19/Jun/2026 12:24:33] "GET /suggestions?context=Do%20you%20need%20information%20about%20our%20locations? HTTP/1.1" 200 -
+[2026-06-19 12:24:39,351] 127.0.0.1 - - [19/Jun/2026 12:24:39] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:24:49,938] 127.0.0.1 - - [19/Jun/2026 12:24:49] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:24:50,244] Search request received: {'query': 'location near me', 'location': {'lat': 26.799896, 'lng': 75.857105}}
+[2026-06-19 12:24:50,506] 127.0.0.1 - - [19/Jun/2026 12:24:50] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:24:58,981] 127.0.0.1 - - [19/Jun/2026 12:24:58] "GET /suggestions?context=location%20near%20me HTTP/1.1" 200 -
+[2026-06-19 12:25:43,337] 127.0.0.1 - - [19/Jun/2026 12:25:43] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:25:52,130] 127.0.0.1 - - [19/Jun/2026 12:25:52] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:25:52,439] Search request received: {'query': 'stores', 'location': {'lat': 26.799896, 'lng': 75.857105}}
+[2026-06-19 12:25:52,685] 127.0.0.1 - - [19/Jun/2026 12:25:52] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:26:09,184] 127.0.0.1 - - [19/Jun/2026 12:26:09] "GET /suggestions?context=stores HTTP/1.1" 200 -
+[2026-06-19 12:27:11,432] 127.0.0.1 - - [19/Jun/2026 12:27:11] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:27:26,507] 127.0.0.1 - - [19/Jun/2026 12:27:26] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:27:26,826] Search request received: {'query': 'storees near Zona Industrial de Campia, Vouzela, Portugal', 'location': None}
+[2026-06-19 12:27:27,091] 127.0.0.1 - - [19/Jun/2026 12:27:27] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:27:33,502] 127.0.0.1 - - [19/Jun/2026 12:27:33] "GET /suggestions?context=storees%20near%20Zona%20Industrial%20de%20Campia,%20Vouzela,%20Portugal HTTP/1.1" 200 -
+[2026-06-19 12:27:49,659] 127.0.0.1 - - [19/Jun/2026 12:27:49] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:28:05,876] 127.0.0.1 - - [19/Jun/2026 12:28:05] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:28:06,196] Search request received: {'query': 'prime misniter of india', 'location': None}
+[2026-06-19 12:28:06,467] 127.0.0.1 - - [19/Jun/2026 12:28:06] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:28:10,597] 127.0.0.1 - - [19/Jun/2026 12:28:10] "GET /suggestions?context=prime%20misniter%20of%20india HTTP/1.1" 200 -
+[2026-06-19 12:28:23,759] 127.0.0.1 - - [19/Jun/2026 12:28:23] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:28:30,850] 127.0.0.1 - - [19/Jun/2026 12:28:30] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:28:31,159] Search request received: {'query': 'capital of india', 'location': None}
+[2026-06-19 12:28:31,389] 127.0.0.1 - - [19/Jun/2026 12:28:31] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:28:35,744] 127.0.0.1 - - [19/Jun/2026 12:28:35] "GET /suggestions?context=capital%20of%20india HTTP/1.1" 200 -
+[2026-06-19 12:28:57,689] 127.0.0.1 - - [19/Jun/2026 12:28:57] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:28:57,939] Search request received: {'query': 'what is glass drive', 'location': None}
+[2026-06-19 12:28:58,247] 127.0.0.1 - - [19/Jun/2026 12:28:58] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:29:04,265] 127.0.0.1 - - [19/Jun/2026 12:29:04] "GET /suggestions?context=what%20is%20glass%20drive HTTP/1.1" 200 -
+[2026-06-19 12:30:08,849] 127.0.0.1 - - [19/Jun/2026 12:30:08] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:30:09,102] Search request received: {'query': 'any specific product', 'location': None}
+[2026-06-19 12:30:09,344] 127.0.0.1 - - [19/Jun/2026 12:30:09] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:30:13,975] 127.0.0.1 - - [19/Jun/2026 12:30:13] "GET /suggestions?context=any%20specific%20product HTTP/1.1" 200 -
+[2026-06-19 12:34:53,015] Server running on http://localhost:8000
+[2026-06-19 12:34:53,070] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 12:34:53,072] [33mPress CTRL+C to quit[0m
+[2026-06-19 12:34:54,117] 127.0.0.1 - - [19/Jun/2026 12:34:54] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:34:54,387] Search request received: {'query': 'Tem alguma dúvida sobre o processo de seguro com a Glassdrive? ?', 'location': None}
+[2026-06-19 12:34:54,676] 127.0.0.1 - - [19/Jun/2026 12:34:54] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:34:59,376] 127.0.0.1 - - [19/Jun/2026 12:34:59] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:35:01,026] 127.0.0.1 - - [19/Jun/2026 12:35:01] "GET /suggestions?context=Tem%20alguma%20dúvida%20sobre%20o%20processo%20de%20seguro%20com%20a%20Glassdrive?%20? HTTP/1.1" 200 -
+[2026-06-19 12:35:02,846] 127.0.0.1 - - [19/Jun/2026 12:35:02] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:35:14,402] 127.0.0.1 - - [19/Jun/2026 12:35:14] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:35:14,710] Search request received: {'query': 'stores near me', 'location': {'lat': 26.799896, 'lng': 75.857105}}
+[2026-06-19 12:35:14,963] 127.0.0.1 - - [19/Jun/2026 12:35:14] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:35:23,053] 127.0.0.1 - - [19/Jun/2026 12:35:23] "GET /suggestions?context=stores%20near%20me HTTP/1.1" 200 -
+[2026-06-19 12:35:45,385] 127.0.0.1 - - [19/Jun/2026 12:35:45] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:35:45,642] Search request received: {'query': 'location in Portugal', 'location': {'lat': 26.799896, 'lng': 75.857105}}
+[2026-06-19 12:35:45,886] 127.0.0.1 - - [19/Jun/2026 12:35:45] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:35:56,056] 127.0.0.1 - - [19/Jun/2026 12:35:56] "GET /suggestions?context=location%20in%20Portugal HTTP/1.1" 200 -
