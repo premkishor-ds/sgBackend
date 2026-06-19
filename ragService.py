@@ -185,34 +185,96 @@ def search_similar(query_text, limit=5):
 #  Language detection
 # ──────────────────────────────────────────────────────────────
 
-# Common words per language (ordered by discriminative power)
+# Common words per language
+# English list is large to catch short, high-frequency words that often appear
+# alone in short queries like "services provided in Glassdrive Fátima"
 _LANG_WORDS = {
     'en': [
-        'what', 'where', 'when', 'how', 'the', 'is', 'are', 'can', 'do',
-        'i', 'any', 'specific', 'product', 'my', 'your', 'for', 'with',
-        'have', 'has', 'want', 'need', 'find', 'get', 'tell', 'about',
-        'please', 'help', 'does', 'will', 'show', 'know', 'which',
+        # Question words
+        'what', 'where', 'when', 'how', 'which', 'who', 'why',
+        # Articles & prepositions (very common in English)
+        'the', 'a', 'an', 'in', 'at', 'of', 'on', 'by', 'to', 'from',
+        'with', 'for', 'about', 'into', 'near', 'between', 'through',
+        # Verbs
+        'is', 'are', 'was', 'were', 'be', 'been', 'being',
+        'do', 'does', 'did', 'can', 'could', 'will', 'would', 'should',
+        'have', 'has', 'had', 'want', 'need', 'get', 'find', 'show',
+        'tell', 'give', 'list', 'provide', 'provided', 'know',
+        'help', 'make', 'take', 'use', 'work', 'look', 'book',
+        # Pronouns
+        'i', 'my', 'me', 'we', 'our', 'you', 'your', 'it', 'its',
+        # Common nouns relevant to queries
+        'services', 'service', 'product', 'products', 'centre', 'center',
+        'location', 'locations', 'address', 'hours', 'time', 'appointment',
+        'insurance', 'repair', 'replacement', 'glass', 'windshield',
+        # Other common English words
+        'any', 'all', 'more', 'please', 'specific', 'available',
+        'nearest', 'closest', 'nearby', 'open', 'closed',
     ],
     'fr': [
-        'où', 'comment', 'quel', 'quelle', 'quels', 'quelles', 'je', 'vous',
-        'le', 'la', 'les', 'est', 'sont', 'puis-je', 'que', 'quoi',
-        'pourquoi', 'puis', 'mon', 'ma', 'mes', 'du', 'de', 'des',
-        'une', 'un', 'avec', 'pour', 'dans', 'sur', 'avoir', 'être',
+        'où', 'comment', 'quel', 'quelle', 'quels', 'quelles', 'qui', 'pourquoi',
+        'je', 'tu', 'vous', 'nous', 'il', 'elle', 'ils', 'elles',
+        'le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'au', 'aux',
+        'est', 'sont', 'puis-je', 'que', 'quoi', 'qui',
+        'mon', 'ma', 'mes', 'avec', 'pour', 'dans', 'sur',
+        'avoir', 'être', 'faire', 'prendre', 'trouver',
+        'service', 'services', 'centre', 'horaires', 'rendez-vous',
     ],
     'pt': [
-        'onde', 'como', 'qual', 'quais', 'eu', 'você', 'voce', 'ele',
-        'ela', 'os', 'as', 'está', 'são', 'posso', 'que', 'meu', 'minha',
-        'por', 'para', 'com', 'tem', 'ter', 'ser', 'uma', 'num', 'numa',
-        'quero', 'preciso', 'gostaria', 'existe', 'há',
+        # Question/relative words
+        'onde', 'como', 'qual', 'quais', 'quem', 'porque', 'quanto', 'que',
+        # Pronouns and articles unique to PT
+        'eu', 'você', 'voce', 'ele', 'ela', 'nos', 'eles', 'elas',
+        'os', 'as', 'um', 'uma', 'uns', 'umas',
+        # PT prepositions and contractions
+        'de', 'do', 'da', 'dos', 'das', 'ao', 'aos', 'pelo', 'pela',
+        'num', 'numa', 'nuns', 'numas',
+        'no', 'na', 'se',
+        # Common PT verbs
+        'está', 'são', 'posso', 'meu', 'minha',
+        'por', 'para', 'com', 'tem', 'ter', 'ser', 'faz', 'fazer',
+        'foi', 'será', 'pode', 'posso', 'vende', 'vender', 'oferece', 'oferecer',
+        'quero', 'preciso', 'gostaria', 'existe', 'há', 'trata',
+        # PT-specific nouns (Glassdrive domain)
+        'serviços', 'centro', 'horário', 'seguro', 'vidro', 'reparação',
+        'para-brisas', 'substituição', 'marcação', 'processo', 'aberta',
+        'sábado', 'preços', 'orçamento', 'garantia', 'contacto',
+        'produtos', 'presidente', 'melhor',
     ],
 }
 
 def detect_language(text: str) -> str:
-    """Detect query language using common word frequency. Returns 'en', 'fr', or 'pt'."""
-    words = set(re.findall(r"[a-záàâãäéèêëíìîïóòôõöúùûüçñ']+", text.lower()))
+    """Detect query language using weighted word frequency. Returns 'en', 'fr', or 'pt'."""
+    lower = text.lower()
+    words = set(re.findall(r"[a-záàâãäéèêëíìîïóòôõöúùûüçñ'-]+", lower))
+
+    # Base score: 1 per matching keyword
     scores = {lang: sum(1 for w in kws if w in words) for lang, kws in _LANG_WORDS.items()}
+
+    # HIGH-VALUE discriminators: unique-to-one-language markers score +3
+    # These words appear in ONLY one language so are very reliable
+    PT_STRONG = {'da', 'dos', 'das', 'ao', 'aos', 'pelo', 'pela', 'num', 'numa',
+                 'faz', 'fazer', 'trata', 'foi', 'será', 'pode', 'há', 'quem', 'qual', 'quais',
+                 'para-brisas', 'substituição', 'marcação', 'sábado',
+                 'serviços', 'horário', 'reparação', 'vidro', 'oferece', 'vende'}
+    FR_STRONG = {'où', 'est-ce', 'puis-je', 'rendez-vous', 'êtes', 'être', 'horaires',
+                 'les', 'des', 'aux', 'du'}
+    EN_STRONG = {'the', 'is', 'are', 'was', 'were', 'does', 'did', 'will', 'would',
+                 'should', 'book', 'windshield', 'insurance', 'warranty', 'nearest',
+                 'replacement', 'repair', 'services', 'appointment', 'location'}
+
+    for w in words:
+        if w in PT_STRONG: scores['pt'] += 3
+        if w in FR_STRONG: scores['fr'] += 3
+        if w in EN_STRONG: scores['en'] += 3
+
+    # Accented-character tiebreaker: ã, õ, ç, â+a are strongly PT
+    pt_accents = len(re.findall(r'[ãõ]', lower))
+    if pt_accents > 0:
+        scores['pt'] += pt_accents * 2
+
     best = max(scores, key=scores.get)
-    # Default to 'en' when scores are tied or all zero
+    # Default to 'en' when all scores are zero (very short/ambiguous query)
     return best if scores[best] > 0 else 'en'
 
 
@@ -288,20 +350,26 @@ CRITICAL RULES:
 1. Language: Respond ONLY in {lang_name}.
 2. Be concise and direct. List relevant centers/information clearly. Do not write long introductions.
 3. NEVER include parenthetical notes, reasoning, or internal thoughts. Start directly with the answer.
-4. LOCATION PRIVACY (very important):
+4. NO PLACEHOLDERS — NEVER output template text like [Center Name], [Address of Center],
+   [City, Country], or any text in square brackets. Use ONLY real data from the context.
+   If real data is unavailable, say so plainly (e.g. "Address not listed in our records").
+5. LOCATION PRIVACY:
    - If GPS coordinates appear in the context, use them ONLY to rank centers by proximity.
-   - NEVER reveal, mention, or quote the GPS coordinates in your response.
-   - NEVER tell the user where they currently are (city, country, or region).
-   - NEVER comment on whether the user is in Portugal or not.
-   - Simply list the relevant Glassdrive centers sorted by proximity without any geographic commentary.
-5. If the question is NOT about Glassdrive, reply ONLY:
+   - NEVER reveal the GPS coordinates or comment on where the user is geographically.
+   - Simply list the relevant Glassdrive centers without geographic commentary.
+6. If the question is NOT about Glassdrive, reply ONLY:
    "{OFF_TOPIC.get(lang, OFF_TOPIC['en']).split(chr(10))[0]}"
-6. Answer ONLY using the provided context. Do not add external information.
-7. At the end of every on-topic answer, write exactly:
+7. Answer ONLY using the provided context. Do not invent or assume any information.
+8. After every on-topic answer, add follow-up questions in this EXACT format:
 [FOLLOWUPS]
-- Follow-up question 1 in {lang_name} ?
-- Follow-up question 2 in {lang_name} ?
-- Follow-up question 3 in {lang_name} ?
+- <write a real, specific follow-up question about Glassdrive in {lang_name}>
+- <write another real, specific follow-up question in {lang_name}>
+- <write a third real, specific follow-up question in {lang_name}>
+
+For example, good follow-ups look like:
+- How do I book an appointment at Glassdrive Fátima?
+- What are the opening hours on Saturday?
+- Does Glassdrive cover the cost through my insurance?
 
 Do not write anything after the follow-up questions."""
 
@@ -326,6 +394,15 @@ Do not write anything after the follow-up questions."""
 
 User question: {query_text}"""
 
+    # Language-priming assistant turn — placed BEFORE the user question so the
+    # model continues in the target language even with foreign-language context docs.
+    _LANG_PRIMER = {
+        'en': 'Here is the information about Glassdrive',
+        'fr': 'Voici les informations sur Glassdrive',
+        'pt': 'Aqui estão as informações sobre a Glassdrive',
+    }
+    lang_primer = _LANG_PRIMER.get(lang, _LANG_PRIMER['en'])
+
     try:
         print(f"RAG SERVICE: Streaming answer from Ollama ({OLLAMA_GEN_MODEL}) for: {query_text}")
         response = requests.post(
@@ -333,8 +410,9 @@ User question: {query_text}"""
             json={
                 "model": OLLAMA_GEN_MODEL,
                 "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_content}
+                    {"role": "system",    "content": system_prompt},
+                    {"role": "user",      "content": user_content},
+                    {"role": "assistant", "content": lang_primer},
                 ],
                 "stream": True,
                 "options": {"temperature": 0.7}
@@ -344,7 +422,7 @@ User question: {query_text}"""
         )
         response.raise_for_status()
 
-        full_text = ""
+        full_text = ""  # kept for debug logging if needed
         in_followup = False
         followup_buffer = ""
         MARKER = "[FOLLOWUPS]"
@@ -444,32 +522,39 @@ User question: {query_text}"""
         if in_followup and followup_buffer:
             for l in followup_buffer.strip().split('\n'):
                 cleaned = l.strip().lstrip('-*•0123456789.:').strip()
-                # Also strip "Question N:" style prefixes
-                import re as _re
-                cleaned = _re.sub(r'^question\s*\d+[:.]\s*', '', cleaned, flags=_re.IGNORECASE).strip()
-                if cleaned and len(cleaned) > 3:
+                # Strip "Question N:" style prefixes
+                cleaned = re.sub(r'^question\s*\d+[:.]\s*', '', cleaned, flags=re.IGNORECASE).strip()
+                # Strip angle-bracket template text like <write a question here>
+                cleaned = re.sub(r'^<.*?>$', '', cleaned, flags=re.IGNORECASE).strip()
+                if cleaned and len(cleaned) > 5 and not cleaned.startswith('<'):
                     followups.append(cleaned)
 
+        # Language-aware fallback follow-ups (used only when model produces none)
+        FALLBACK_FOLLOWUPS = {
+            'en': ["How do I book an appointment?", "What are the opening hours?", "How does insurance work with Glassdrive?"],
+            'fr': ["Comment puis-je prendre rendez-vous ?", "Quels sont les tarifs ?", "Comment contacter un expert ?"],
+            'pt': ["Como posso marcar uma consulta?", "Quais são os horários?", "Como funciona o seguro com a Glassdrive?"],
+        }
         if not followups:
-            followups = [
-                "Comment puis-je prendre rendez-vous ?",
-                "Quels sont les tarifs ?",
-                "Comment contacter un expert ?"
-            ]
+            followups = FALLBACK_FOLLOWUPS.get(lang, FALLBACK_FOLLOWUPS['en'])
 
         yield json.dumps({'type': 'followup', 'followup': followups[:3]}) + '\n'
         yield json.dumps({'type': 'done'}) + '\n'
 
     except Exception as err:
         print(f"Error in streaming: {err}")
-        yield json.dumps({
-            'type': 'token',
-            'token': "\n\n**[Erreur lors de la génération]**\n\n"
-        }) + '\n'
-        yield json.dumps({
-            'type': 'followup',
-            'followup': ["Réessayer la recherche", "Contacter un centre", "Voir nos services"]
-        }) + '\n'
+        ERR_MSGS = {
+            'en': "An error occurred while generating the response. Please try again.",
+            'fr': "Une erreur s'est produite lors de la génération. Veuillez réessayer.",
+            'pt': "Ocorreu um erro ao gerar a resposta. Por favor, tente novamente.",
+        }
+        ERR_FOLLOWUPS = {
+            'en': ["Try the search again", "Contact a centre", "See our services"],
+            'fr': ["Réessayer la recherche", "Contacter un centre", "Voir nos services"],
+            'pt': ["Tentar novamente", "Contactar um centro", "Ver os nossos serviços"],
+        }
+        yield json.dumps({'type': 'token', 'token': ERR_MSGS.get(lang, ERR_MSGS['en'])}) + '\n'
+        yield json.dumps({'type': 'followup', 'followup': ERR_FOLLOWUPS.get(lang, ERR_FOLLOWUPS['en'])}) + '\n'
         yield json.dumps({'type': 'done'}) + '\n'
 
 
@@ -494,9 +579,10 @@ def get_dynamic_suggestions(context_query=None):
                 context = context_query
 
             system_prompt = (
-                "You are a France Pare-Brise assistant. Based on the user's last question and related "
-                "context, generate exactly 4 short follow-up search queries in French.\n"
+                "You are a Glassdrive customer service assistant. Based on the user's last question and "
+                "related context, generate exactly 4 short follow-up search queries.\n"
                 "CRITICAL REQUIREMENTS:\n"
+                "- Respond in the SAME language as the user's last question.\n"
                 "- Each suggestion must be a natural follow-up or related question to the user's question.\n"
                 "- Suggestions must be answerable from the context. Do not invent topics.\n"
                 "- Keep each suggestion concise (max 10 words).\n"
@@ -521,8 +607,8 @@ def get_dynamic_suggestions(context_query=None):
 
             context = "\n\n".join([r['content'][:500] for r in results])
             system_prompt = (
-                "You are a France Pare-Brise assistant. Generate exactly 4 short and relevant search "
-                "suggestions in French based on the provided context.\n"
+                "You are a Glassdrive customer service assistant. Generate exactly 4 short and relevant search "
+                "suggestions based on the provided context.\n"
                 "CRITICAL REQUIREMENTS:\n"
                 "- Every suggestion must be a specific question answerable from the context.\n"
                 "- Be specific to the services, locations, or features mentioned.\n"

@@ -68,12 +68,27 @@ def search():
         # Retrieval
         relevant_chunks = ragService.search_similar(query_text, 5)
 
-        # Relevance gate: if the top result similarity is below threshold,
-        # the query is off-topic — pass empty chunks so we return a refusal
-        # without ever calling the LLM
-        RELEVANCE_THRESHOLD = 0.28
-        if relevant_chunks and relevant_chunks[0].get('similarity', 0) < RELEVANCE_THRESHOLD:
-            log_message(f"Off-topic query rejected (best similarity: {relevant_chunks[0].get('similarity', 0):.3f}): {query_text}")
+        # Relevance gate using a hybrid keyword + embedding check:
+        # If the query contains any of the domain keywords/stems, we use a lower threshold (0.50).
+        # Otherwise (no domain keywords), we use a high threshold (0.70) to prevent off-topic
+        # sentences in other languages from leaking through due to vector alignment/vocabulary overlaps.
+        top_sim = relevant_chunks[0].get('similarity', 0) if relevant_chunks else 0.0
+        
+        domain_keywords = [
+            'glassdrive', 'glass', 'vitr', 'vidr', 'para-bris', 'parabris', 'pare-bris', 'parebris',
+            'windshield', 'windscreen', 'window', 'repar', 'substitu', 'troc', 'consert',
+            'chang', 'remplac', 'appoint', 'rendez-vous', 'rendezvous', 'marc', 'agend', 'book',
+            'insur', 'segur', 'assur', 'adas', 'calibr', 'hour', 'horair', 'ouvert', 'abert',
+            'sabad', 'samedi', 'doming', 'dimanch', 'centr', 'servic', 'camping-car', 'autocaravana',
+            'motorhome', 'van', 'camion', 'truck', 'vehic', 'véhic', 'veícul'
+        ]
+        
+        query_lower = query_text.lower()
+        has_domain_keyword = any(kw in query_lower for kw in domain_keywords)
+        threshold = 0.50 if has_domain_keyword else 0.70
+        
+        if top_sim < threshold:
+            log_message(f"Off-topic query rejected (similarity: {top_sim:.3f}, threshold: {threshold:.2f}, keyword: {has_domain_keyword}): {query_text}")
             relevant_chunks = []
 
         # Stream Generation

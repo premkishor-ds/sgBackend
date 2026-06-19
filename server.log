@@ -172,3 +172,36 @@
 [2026-06-19 12:40:48,454] Search request received: {'query': 'i want to solve math', 'location': None}
 [2026-06-19 12:40:48,705] 127.0.0.1 - - [19/Jun/2026 12:40:48] "POST /search HTTP/1.1" 200 -
 [2026-06-19 12:40:52,990] 127.0.0.1 - - [19/Jun/2026 12:40:52] "GET /suggestions?context=i%20want%20to%20solve%20math HTTP/1.1" 200 -
+[2026-06-19 12:42:36,155] 127.0.0.1 - - [19/Jun/2026 12:42:36] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:42:36,421] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 12:42:36,684] 127.0.0.1 - - [19/Jun/2026 12:42:36] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:42:52,114] 127.0.0.1 - - [19/Jun/2026 12:42:52] "GET /suggestions?context=services%20provided%20in%20Glassdrive%20Fátima HTTP/1.1" 200 -
+[2026-06-19 12:47:04,728] Server running on http://localhost:8000
+[2026-06-19 12:47:04,771] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 12:47:04,772] [33mPress CTRL+C to quit[0m
+[2026-06-19 12:47:06,682] 127.0.0.1 - - [19/Jun/2026 12:47:06] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:47:08,921] 127.0.0.1 - - [19/Jun/2026 12:47:08] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:47:09,234] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 12:47:09,497] 127.0.0.1 - - [19/Jun/2026 12:47:09] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:47:14,624] 127.0.0.1 - - [19/Jun/2026 12:47:14] "GET /suggestions?context=services%20provided%20in%20Glassdrive%20Fátima HTTP/1.1" 200 -
+[2026-06-19 12:49:27,503] Server running on http://localhost:8000
+[2026-06-19 12:49:27,543] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 12:49:27,543] [33mPress CTRL+C to quit[0m
+[2026-06-19 12:53:24,931] Server running on http://localhost:8000
+[2026-06-19 12:53:24,964] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 12:53:24,964] [33mPress CTRL+C to quit[0m
+[2026-06-19 13:05:28,304] Server running on http://localhost:8000
+[2026-06-19 13:05:28,365] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 13:05:28,366] [33mPress CTRL+C to quit[0m
