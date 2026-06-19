@@ -157,3 +157,18 @@
 [2026-06-19 12:35:45,642] Search request received: {'query': 'location in Portugal', 'location': {'lat': 26.799896, 'lng': 75.857105}}
 [2026-06-19 12:35:45,886] 127.0.0.1 - - [19/Jun/2026 12:35:45] "POST /search HTTP/1.1" 200 -
 [2026-06-19 12:35:56,056] 127.0.0.1 - - [19/Jun/2026 12:35:56] "GET /suggestions?context=location%20in%20Portugal HTTP/1.1" 200 -
+[2026-06-19 12:38:13,118] Server running on http://localhost:8000
+[2026-06-19 12:38:13,154] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 12:38:13,155] [33mPress CTRL+C to quit[0m
+[2026-06-19 12:40:00,320] 127.0.0.1 - - [19/Jun/2026 12:40:00] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 12:40:02,891] 127.0.0.1 - - [19/Jun/2026 12:40:02] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:40:03,199] Search request received: {'query': 'location in Portugal', 'location': None}
+[2026-06-19 12:40:03,463] 127.0.0.1 - - [19/Jun/2026 12:40:03] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:40:26,678] 127.0.0.1 - - [19/Jun/2026 12:40:26] "GET /suggestions?context=location%20in%20Portugal HTTP/1.1" 200 -
+[2026-06-19 12:40:48,202] 127.0.0.1 - - [19/Jun/2026 12:40:48] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 12:40:48,454] Search request received: {'query': 'i want to solve math', 'location': None}
+[2026-06-19 12:40:48,705] 127.0.0.1 - - [19/Jun/2026 12:40:48] "POST /search HTTP/1.1" 200 -
+[2026-06-19 12:40:52,990] 127.0.0.1 - - [19/Jun/2026 12:40:52] "GET /suggestions?context=i%20want%20to%20solve%20math HTTP/1.1" 200 -
