@@ -1,13 +1,10 @@
 import psycopg2
 import os
-from dotenv import load_dotenv
 import uuid
-
-load_dotenv()
 
 class Database:
     def __init__(self):
-        self.connection_string = os.getenv('DATABASE_URL')
+        self.connection_string = os.getenv('DATABASE_URL', 'postgres://postgres:Dots%23123%3F@localhost:5432/saint_gobain_search')
         self.pool = None
     
     def get_connection(self):
@@ -32,9 +29,6 @@ class Database:
         try:
             # Create extension
             self.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
-            
-            # Drop table if it exists to refresh the search_vector definition
-            self.query('DROP TABLE IF EXISTS document_chunks;')
             
             # Create table with full-text search and embeddings
             create_table_query = '''

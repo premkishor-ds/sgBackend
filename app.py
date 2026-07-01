@@ -75,12 +75,14 @@ def search():
         top_sim = relevant_chunks[0].get('similarity', 0) if relevant_chunks else 0.0
         
         domain_keywords = [
-            'glassdrive', 'glass', 'vitr', 'vidr', 'para-bris', 'parabris', 'pare-bris', 'parebris',
-            'windshield', 'windscreen', 'window', 'repar', 'substitu', 'troc', 'consert',
+            'glassdrive', 'france pare-brise', 'france pare brise', 'pare-brise', 'parebrise',
+            'fpb', 'glass', 'vitr', 'vidr', 'para-bris', 'parabris', 'windshield',
+            'windscreen', 'window', 'repar', 'substitu', 'troc', 'consert',
             'chang', 'remplac', 'appoint', 'rendez-vous', 'rendezvous', 'marc', 'agend',
             'insur', 'segur', 'assur', 'adas', 'calibr', 'hour', 'horair', 'ouvert', 'abert',
             'sabad', 'samedi', 'doming', 'dimanch', 'centr', 'servic', 'camping-car', 'autocaravana',
-            'motorhome', 'van', 'camion', 'truck', 'vehic', 'véhic', 'veícul'
+            'motorhome', 'van', 'camion', 'truck', 'vehic', 'véhic', 'veícul',
+            'location', 'near', 'close', 'where', 'perto', 'proche', 'adresse', 'address', 'map'
         ]
         
         query_lower = query_text.lower()

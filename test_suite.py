@@ -56,7 +56,17 @@ print("=" * 60)
 print("TEST 2: Similarity Scores (relevance gate)")
 print("=" * 60)
 
-THRESHOLD = 0.28
+domain_keywords = [
+    'glassdrive', 'france pare-brise', 'france pare brise', 'pare-brise', 'parebrise',
+    'fpb', 'glass', 'vitr', 'vidr', 'para-bris', 'parabris', 'windshield',
+    'windscreen', 'window', 'repar', 'substitu', 'troc', 'consert',
+    'chang', 'remplac', 'appoint', 'rendez-vous', 'rendezvous', 'marc', 'agend',
+    'insur', 'segur', 'assur', 'adas', 'calibr', 'hour', 'horair', 'ouvert', 'abert',
+    'sabad', 'samedi', 'doming', 'dimanch', 'centr', 'servic', 'camping-car', 'autocaravana',
+    'motorhome', 'van', 'camion', 'truck', 'vehic', 'véhic', 'veícul',
+    'location', 'near', 'close', 'where', 'perto', 'proche', 'adresse', 'address', 'map'
+]
+
 search_cases = [
     # (query, should_pass_threshold, description)
     ("Glassdrive opening hours",          True,  "on-topic: hours"),
@@ -68,17 +78,21 @@ search_cases = [
     ("recipe for chocolate cake",         False, "off-topic: food"),
 ]
 
-for query, should_pass, desc in search_cases:
+for query_text, should_pass, desc in search_cases:
     try:
-        results = search_similar(query, 5)
+        results = search_similar(query_text, 5)
         top_sim = results[0]['similarity'] if results else 0.0
-        passes_gate = top_sim >= THRESHOLD
+        
+        has_domain_keyword = any(kw in query_text.lower() for kw in domain_keywords)
+        threshold = 0.44 if has_domain_keyword else 0.70
+        passes_gate = top_sim >= threshold
+        
         ok = passes_gate == should_pass
         if not ok:
-            errors.append(f"Relevance FAIL for '{query}': sim={top_sim:.3f}, expected pass={should_pass}")
+            errors.append(f"Relevance FAIL for '{query_text}': sim={top_sim:.3f}, expected pass={should_pass}")
         status = PASS if ok else FAIL
         gate_label = "PASS" if passes_gate else "BLOCK"
-        print(f"  {status} [{gate_label}] sim={top_sim:.3f} | {desc}: '{query[:40]}'")
+        print(f"  {status} [{gate_label}] sim={top_sim:.3f} | {desc}: '{query_text[:40]}'")
     except Exception as e:
         errors.append(f"Search error on '{query}': {e}")
         print(f"  {FAIL} ERROR: {e}")
@@ -103,7 +117,9 @@ for query_text, lang, desc in stream_cases:
     try:
         results = search_similar(query_text, 5)
         top_sim = results[0]['similarity'] if results else 0.0
-        if top_sim < THRESHOLD:
+        has_domain_keyword = any(kw in query_text.lower() for kw in domain_keywords)
+        threshold = 0.44 if has_domain_keyword else 0.70
+        if top_sim < threshold:
             results = []
 
         events = {'sources': 0, 'token': 0, 'followup': 0, 'done': 0}
@@ -169,7 +185,9 @@ placeholder_query = "services provided in Glassdrive Fatima"
 try:
     results = search_similar(placeholder_query, 5)
     top_sim = results[0]['similarity'] if results else 0.0
-    if top_sim < THRESHOLD:
+    has_domain_keyword = any(kw in placeholder_query.lower() for kw in domain_keywords)
+    threshold = 0.44 if has_domain_keyword else 0.70
+    if top_sim < threshold:
         results = []
     answer_text = ""
     for raw in generate_answer_stream(placeholder_query, results, lang='en'):

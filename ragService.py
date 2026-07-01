@@ -3,8 +3,6 @@ import json
 import re
 import math
 import requests
-from dotenv import load_dotenv
-load_dotenv(override=True)
 from db import query
 
 # Ollama settings
@@ -19,25 +17,56 @@ print(f"OLLAMA RAG SERVICE: Base URL: {OLLAMA_BASE_URL}, Gen: {OLLAMA_GEN_MODEL}
 #  Data loading & processing
 # ──────────────────────────────────────────────────────────────
 
+import csv
+
 def load_data(directory_path):
-    """Load and parse JSON files"""
-    files = [f for f in os.listdir(directory_path) if f.endswith('.json')]
+    """Load and parse JSON or CSV files"""
+    # Check for CSV first
+    csv_files = [f for f in os.listdir(directory_path) if f.endswith('.csv')]
     all_data = []
 
-    for file in files:
-        with open(os.path.join(directory_path, file), 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            enriched_data = []
-            if isinstance(data, list):
-                for item in data:
-                    item['_source'] = file
-                    enriched_data.append(item)
-            else:
-                data['_source'] = file
-                enriched_data.append(data)
-            all_data.extend(enriched_data)
+    for file in csv_files:
+        filepath = os.path.join(directory_path, file)
+        with open(filepath, 'r', encoding='utf-8-sig') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                row['_source'] = file
+                row['_type'] = 'csv'
+                all_data.append(row)
+
+    # Fallback to JSON if no CSV data loaded
+    if not all_data:
+        json_files = [f for f in os.listdir(directory_path) if f.endswith('.json')]
+        for file in json_files:
+            filepath = os.path.join(directory_path, file)
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                enriched_data = []
+                if isinstance(data, list):
+                    for item in data:
+                        item['_source'] = file
+                        item['_type'] = 'json'
+                        enriched_data.append(item)
+                else:
+                    data['_source'] = file
+                    data['_type'] = 'json'
+                    enriched_data.append(data)
+                all_data.extend(enriched_data)
 
     return all_data
+
+
+def clean_rich_text(html_str, city_name=None):
+    if not html_str:
+        return ""
+    # Strip HTML tags
+    text = re.sub(r'<[^>]+>', ' ', html_str)
+    # Replace city placeholders
+    if city_name:
+        text = re.sub(r'\[\[\s*address\.city\s*\]\]', city_name, text, flags=re.IGNORECASE)
+    # Clean up whitespace
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
 
 
 def process_data(items):
@@ -45,6 +74,108 @@ def process_data(items):
     processed_items = []
 
     for item in items:
+        # Check if item is from CSV
+        if item.get('_type') == 'csv':
+            name = item.get('Page Heading H1') or item.get('Name') or 'France Pare-Brise'
+            city = item.get('Address > City', '').strip()
+            
+            # Format address
+            addr_parts = []
+            for field in ['Address > Line 1', 'Address > Line 2', 'Address > Postal Code', 'Address > City', 'Country Name']:
+                val = item.get(field, '').strip()
+                if val:
+                    addr_parts.append(val)
+            full_address = ", ".join(addr_parts)
+            
+            phone = item.get('Main Phone > Phone Number', '').strip()
+            
+            # Coordinates
+            lat = item.get('Display Lat/Long > Latitude') or item.get('Yext Display Lat/Long > Latitude') or item.get('City Lat/Long > Latitude')
+            lng = item.get('Display Lat/Long > Longitude') or item.get('Yext Display Lat/Long > Longitude') or item.get('City Lat/Long > Longitude')
+            coords_text = ""
+            if lat and lng:
+                coords_text = f"latitude {lat.strip()}\nlongitude {lng.strip()}"
+            
+            # Descriptions from various columns
+            desc = item.get('Description', '').strip() or item.get('Business Description', '').strip()
+            desc = clean_rich_text(desc, city)
+            
+            h2 = item.get('Business Heading H2', '').strip()
+            
+            desc_rtv2 = clean_rich_text(item.get('Business Description (Rich Text (v2)) > HTML', ''), city)
+            desc_v2 = clean_rich_text(item.get('Description v2 > HTML', ''), city)
+            
+            descriptions = []
+            if desc:
+                descriptions.append(desc)
+            if desc_rtv2 and desc_rtv2 not in descriptions:
+                descriptions.append(desc_rtv2)
+            if desc_v2 and desc_v2 not in descriptions:
+                descriptions.append(desc_v2)
+            combined_desc = "\n".join(descriptions)
+            
+            # Format hours
+            days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+            hours_list = []
+            for day in days:
+                h_val = item.get(f'Hours > {day}', '').strip()
+                if h_val and h_val.lower() != 'closed':
+                    hours_list.append(f"  {day}: {h_val}")
+                else:
+                    hours_list.append(f"  {day}: Closed")
+            hours_text = "\n".join(hours_list)
+            
+            # Format services & advantages
+            services = []
+            services_val = item.get('Services') or item.get('FPB Services Locations > Name') or item.get('Related Core Services > Name')
+            if services_val:
+                services = [s.strip() for s in services_val.split(',') if s.strip()]
+            
+            advantages_val = item.get('FPB Advantages data > Name') or item.get('Related Advantages > Name')
+            if advantages_val:
+                services.extend([a.strip() for a in advantages_val.split(',') if a.strip()])
+                
+            services_text = "\n".join([f"  - {s}" for s in services])
+            
+            # Rich columns from Yext location object
+            vehicle_types = item.get('Types de Véhicules') or item.get('Type de Vehicules > Name')
+            vehicle_text = f"Vehicle Types Supported: {vehicle_types.strip()}" if vehicle_types else ""
+            
+            insurance = item.get('Related Insurance Companies > Name') or item.get('Insurance Company Title')
+            insurance_text = f"Insurance Partners: {insurance.strip()}" if insurance else ""
+            
+            car_brands = item.get('Related Car Brands > Name')
+            car_brands_text = f"Car Brands Supported: {car_brands.strip()}" if car_brands else ""
+            
+            cta_link = item.get('Book an Appointment CTA > Link') or item.get('Book Appointment CTA > Link')
+            cta_text = f"Online Appointment Booking Link: {cta_link.strip()}" if cta_link else ""
+            
+            parts = [
+                f"Center Name: {name}",
+                f"Address: {full_address}",
+                f"Phone: {phone}",
+                coords_text,
+                f"Business Heading H2: {h2}" if h2 else "",
+                f"Description:\n{combined_desc}" if combined_desc else "",
+                f"Opening Hours:\n{hours_text}",
+                f"Services Offered:\n{services_text}" if services_text else "",
+                vehicle_text,
+                insurance_text,
+                car_brands_text,
+                cta_text
+            ]
+            
+            text = "\n".join([p for p in parts if p])
+            
+            processed_items.append({
+                'text': text,
+                'metadata': {
+                    'source': item.get('_source', 'unknown'),
+                    'original_title': name
+                }
+            })
+            continue
+
         # Check if this is a location object
         is_location = False
         data_obj = item.get('data', {})
@@ -234,10 +365,10 @@ def search_similar(query_text, limit=5):
             print("No document chunks found in database.")
             return []
 
+        # Clean query for robust matching: split into clean alphabetic words
+        query_words = set(re.findall(r'[a-z]+', query_text.lower()))
+
         results = []
-        
-        # Clean query for robust matching: keep only standard a-z letters
-        query_clean = ''.join(c for c in query_text.lower() if 'a' <= c <= 'z')
 
         for row in rows:
             chunk_emb = row['embedding']
@@ -255,12 +386,17 @@ def search_similar(query_text, limit=5):
                 meta = {}
 
             title = meta.get('original_title', '').lower()
-            center_name = title.replace('glassdrive', '').strip()
+            center_name = (title.replace('glassdrive', '')
+                           .replace('france pare-brise', '')
+                           .replace('france pare brise', '')
+                           .strip())
             
-            # Clean center name for robust matching: keep only standard a-z letters
-            center_clean = ''.join(c for c in center_name if 'a' <= c <= 'z')
+            # Get clean words for center name
+            center_words = [re.sub(r'[^a-z]', '', w) for w in center_name.split()]
+            center_words = [w for w in center_words if w]
             
-            if center_clean and center_clean in query_clean:
+            # Check if all non-empty words of the center name are present in the query words
+            if center_words and all(w in query_words for w in center_words):
                 similarity += 10.0
 
             results.append({
@@ -361,11 +497,11 @@ def detect_language(text: str) -> str:
                  'serviços', 'horário', 'reparação', 'vidro', 'oferece', 'vende',
                  'olá', 'ola', 'oi', 'bom dia', 'boa tarde', 'boa noite'}
     FR_STRONG = {'où', 'est-ce', 'puis-je', 'rendez-vous', 'êtes', 'être', 'horaires',
-                 'les', 'des', 'aux', 'du',
+                 'les', 'des', 'aux', 'du', 'vous', 'proposez',
                  'bonjour', 'salut', 'bonsoir', 'coucou'}
     EN_STRONG = {'the', 'is', 'are', 'was', 'were', 'does', 'did', 'will', 'would',
                  'should', 'book', 'windshield', 'insurance', 'warranty', 'nearest',
-                 'replacement', 'repair', 'services', 'appointment', 'location',
+                 'replacement', 'repair', 'appointment', 'location',
                  'hello', 'hi', 'hey', 'howdy', 'greetings'}
 
     for w in words:
@@ -437,44 +573,44 @@ def generate_answer_stream(query_text, context_chunks, location=None, lang=None)
     # Language-specific off-topic / no-results messages
     OFF_TOPIC = {
         'en': (
-            "Sorry, I can only answer questions about Glassdrive services "
+            "Sorry, I can only answer questions about France Pare-Brise / Glassdrive services "
             "(centres, opening hours, glass repair/replacement, insurance, etc.).\n\n"
             "Your question seems outside our service scope. "
-            "Feel free to ask me anything about Glassdrive!"
+            "Feel free to ask me anything about France Pare-Brise / Glassdrive!"
         ),
         'fr': (
             "Je suis désolé, je ne peux répondre qu'aux questions relatives aux services "
-            "Glassdrive (centres, horaires, réparation/remplacement de vitres, assurances, etc.).\n\n"
+            "France Pare-Brise / Glassdrive (centres, horaires, réparation/remplacement de vitres, assurances, etc.).\n\n"
             "Votre question semble hors du périmètre de nos services. "
-            "N'hésitez pas à me poser une question sur Glassdrive !"
+            "N'hésitez pas à me poser une question sur France Pare-Brise / Glassdrive !"
         ),
         'pt': (
             "Lamentamos, só podemos responder a questões sobre os serviços "
-            "Glassdrive (centros, horários, reparação/substituição de vidros, seguros, etc.).\n\n"
+            "France Pare-Brise / Glassdrive (centros, horários, reparação/substituição de vidros, seguros, etc.).\n\n"
             "A sua pergunta parece estar fora do âmbito dos nossos serviços. "
-            "Não hesite em fazer-nos uma pergunta sobre a Glassdrive!"
+            "Não hesite em fazer-nos uma pergunta sobre a France Pare-Brise / Glassdrive!"
         ),
     }
 
     GREETINGS = {
         'en': (
-            "Hello! I am your Glassdrive customer service assistant. "
+            "Hello! I am your France Pare-Brise / Glassdrive customer service assistant. "
             "How can I help you with our centres, services, or bookings today?"
         ),
         'fr': (
-            "Bonjour ! Je suis votre assistant service client Glassdrive. "
+            "Bonjour ! Je suis votre assistant service client France Pare-Brise / Glassdrive. "
             "Comment puis-je vous aider avec nos centres, services ou rendez-vous aujourd'hui ?"
         ),
         'pt': (
-            "Olá! Sou o seu assistente de apoio ao cliente da Glassdrive. "
+            "Olá! Sou o seu assistente de apoio ao cliente da France Pare-Brise / Glassdrive. "
             "Como posso ajudar com os nossos centros, serviços ou marcações hoje?"
         ),
     }
 
     OFF_TOPIC_FOLLOWUPS = {
-        'en': ["Where is the nearest Glassdrive centre?", "What services do you offer?", "How can I book an appointment?"],
-        'fr': ["Où se trouve le centre Glassdrive le plus proche ?", "Quels services proposez-vous ?", "Comment prendre rendez-vous ?"],
-        'pt': ["Onde fica o centro Glassdrive mais próximo?", "Que serviços oferecem?", "Como posso marcar uma consulta?"],
+        'en': ["Where is the nearest France Pare-Brise centre?", "What services do you offer?", "How can I book an appointment?"],
+        'fr': ["Où se trouve le centre France Pare-Brise le plus proche ?", "Quels services proposez-vous ?", "Comment prendre rendez-vous ?"],
+        'pt': ["Onde fica o centro France Pare-Brise mais próximo?", "Que serviços oferecem?", "Como posso marcar uma consulta?"],
     }
 
     if is_greeting(query_text):
@@ -532,17 +668,17 @@ def generate_answer_stream(query_text, context_chunks, location=None, lang=None)
         title = c.get('metadata', {}).get('original_title', 'Untitled')
         context += f"--- Source {idx}: {title} ---\n{c['content']}\n\n"
 
-    system_prompt = f"""You are a Glassdrive customer service assistant. Your ONLY role is to answer questions about Glassdrive services.
+    system_prompt = f"""You are a France Pare-Brise / Glassdrive customer service assistant. Your ONLY role is to answer questions about France Pare-Brise and Glassdrive services.
 
 ⚠️ LANGUAGE RULE — MANDATORY: Respond ENTIRELY in {lang_name}. Do NOT use any other language.
 
-Glassdrive topics you can answer:
-- Glassdrive center locations, addresses, and opening hours
+France Pare-Brise / Glassdrive topics you can answer:
+- Center locations, addresses, and opening hours
 - Windshield / automotive glass repair and replacement
 - ADAS calibration and driver assistance systems
 - Insurance procedures for glass repair
 - Appointments and service bookings
-- Glassdrive products, warranties, and partnerships
+- Products, warranties, and partnerships
 
 CRITICAL RULES:
 1. Language: Respond ONLY in {lang_name}.
@@ -551,22 +687,27 @@ CRITICAL RULES:
 4. NO PLACEHOLDERS — NEVER output template text like [Center Name], [Address of Center],
    [City, Country], or any text in square brackets. Use ONLY real data from the context.
    If real data is unavailable, say so plainly (e.g. "Address not listed in our records").
-5. LOCATION PRIVACY & DISTANCE:
-   - State the center distances to the user (e.g. "12.4 km from you") ONLY if distance metadata (e.g. "[Distance: 12.4 km from user]") is present in the provided Context.
+5. LOCATION PRIVACY, DISTANCE & PROXIMITY SEARCH:
+   - When the user asks for centers near them, you MUST list the closest centers provided in the Context below.
+   - When listing centers, you MUST format them consistently in a bulleted list using the following EXACT format:
+     - **<Center Name>**: <Address>, Tél: <Phone>, <Distance (e.g. "7085.3 km from you" if distance metadata is present)>
+   - You MUST list the centers present in the Context even if the distance is very large (e.g. thousands of kilometers away from the user).
    - Do NOT invent coordinates, guess locations, or comment on the user's geographic GPS coordinates.
-6. If the question is NOT about Glassdrive, reply ONLY:
+6. If the question is NOT about France Pare-Brise or Glassdrive, reply ONLY:
    "{OFF_TOPIC.get(lang, OFF_TOPIC['en']).split(chr(10))[0]}"
-7. Answer ONLY using the provided context. Do NOT invent, assume, or retrieve any information from your pre-training weights (such as other center names, addresses, or cities). If the context does not contain a specific detail (like an address or hours), say so plainly (e.g. "Address not listed in our records").
+7. STRICT CONTEXT CONSTRAINT:
+   - Answer ONLY using the provided Context. Do NOT invent, assume, or retrieve any information from your pre-training weights (such as other center names, addresses, cities, or phone numbers).
+   - Only list the centers that are actually present in the Context. If the Context contains "France Pare-Brise Hagetmau", you must list "France Pare-Brise Hagetmau". Do NOT list Ennery, Paris, or Saint-Denis unless they are explicitly present in the Context. If the context does not contain a specific detail (like an address or hours), say so plainly (e.g. "Address not listed in our records").
 8. After every on-topic answer, add follow-up questions in this EXACT format:
 [FOLLOWUPS]
-- <write a real, specific follow-up question about Glassdrive in {lang_name}>
-- <write another real, specific follow-up question in {lang_name}>
-- <write a third real, specific follow-up question in {lang_name}>
+- <write a real, specific follow-up question in {lang_name} based ONLY on the centers present in the provided Context above>
+- <write another real, specific follow-up question in {lang_name} based ONLY on the centers present in the provided Context above>
+- <write a third real, specific follow-up question in {lang_name} based ONLY on the centers present in the provided Context above>
 
 For example, good follow-ups look like:
-- How do I book an appointment at Glassdrive Fátima?
-- What are the opening hours on Saturday?
-- Does Glassdrive cover the cost through my insurance?
+- Comment prendre rendez-vous chez France Pare-Brise Ennery ?
+- Quels sont les horaires d'ouverture le samedi ?
+- Est-ce que France Pare-Brise gère les démarches avec mon assurance ?
 
 Do not write anything after the follow-up questions."""
 
@@ -578,9 +719,9 @@ User question: {query_text}"""
     # Language-priming assistant turn — placed BEFORE the user question so the
     # model continues in the target language even with foreign-language context docs.
     _LANG_PRIMER = {
-        'en': 'Here is the information about Glassdrive',
-        'fr': 'Voici les informations sur Glassdrive',
-        'pt': 'Aqui estão as informações sobre a Glassdrive',
+        'en': 'Here is the information about France Pare-Brise / Glassdrive',
+        'fr': 'Voici les informations sur France Pare-Brise / Glassdrive',
+        'pt': 'Aqui estão as informações sobre a France Pare-Brise / Glassdrive',
     }
     lang_primer = _LANG_PRIMER.get(lang, _LANG_PRIMER['en'])
 
@@ -679,17 +820,22 @@ User question: {query_text}"""
             full_text += clean_token
 
             # Check if FOLLOWUPS marker has fully arrived
-            if MARKER in pending:
+            MARKER_PATTERN = re.compile(r'\[?FOLLOW-?UPS\]?:?', re.IGNORECASE)
+            match = MARKER_PATTERN.search(pending)
+            if match:
                 in_followup = True
-                before, after = pending.split(MARKER, 1)
+                marker_start = match.start()
+                marker_end = match.end()
+                before = pending[:marker_start]
+                after = pending[marker_end:]
                 if before.strip():
                     yield json.dumps({'type': 'token', 'token': before}) + '\n'
                 followup_buffer = after
                 pending = ""
                 continue
 
-            # Flush safe portion (keep last len(MARKER)-1 chars in buffer)
-            safe_len = max(0, len(pending) - len(MARKER) + 1)
+            # Flush safe portion (keep last 20 chars in buffer)
+            safe_len = max(0, len(pending) - 20)
             if safe_len > 0:
                 yield json.dumps({'type': 'token', 'token': pending[:safe_len]}) + '\n'
                 pending = pending[safe_len:]
@@ -712,9 +858,9 @@ User question: {query_text}"""
 
         # Language-aware fallback follow-ups (used only when model produces none)
         FALLBACK_FOLLOWUPS = {
-            'en': ["How do I book an appointment?", "What are the opening hours?", "How does insurance work with Glassdrive?"],
-            'fr': ["Comment puis-je prendre rendez-vous ?", "Quels sont les tarifs ?", "Comment contacter un expert ?"],
-            'pt': ["Como posso marcar uma consulta?", "Quais são os horários?", "Como funciona o seguro com a Glassdrive?"],
+            'en': ["How do I book an appointment?", "What are the opening hours?", "How does insurance work with France Pare-Brise?"],
+            'fr': ["Comment puis-je prendre rendez-vous chez France Pare-Brise ?", "Quels sont les tarifs ?", "Comment contacter un expert ?"],
+            'pt': ["Como posso marcar uma consulta?", "Quais são os horários?", "Como funciona o seguro com a France Pare-Brise?"],
         }
         if not followups:
             followups = FALLBACK_FOLLOWUPS.get(lang, FALLBACK_FOLLOWUPS['en'])
