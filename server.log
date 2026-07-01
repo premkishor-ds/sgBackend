@@ -533,3 +533,5 @@ LINE 1: INSERT INTO document_chunks (content, metadata, embedding) V...
  * Running on http://127.0.0.1:8000
  * Running on http://192.168.9.118:8000
 [2026-07-01 12:09:30,391] [33mPress CTRL+C to quit[0m
+[2026-07-01 12:16:36,791] 192.168.9.118 - - [01/Jul/2026 12:16:36] "GET / HTTP/1.1" 200 -
+[2026-07-01 12:16:36,901] 192.168.9.118 - - [01/Jul/2026 12:16:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
