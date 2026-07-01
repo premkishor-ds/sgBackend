@@ -668,6 +668,25 @@ def generate_answer_stream(query_text, context_chunks, location=None, lang=None)
         title = c.get('metadata', {}).get('original_title', 'Untitled')
         context += f"--- Source {idx}: {title} ---\n{c['content']}\n\n"
 
+    followup_examples = {
+        'en': (
+            "- How do I book an appointment at France Pare-Brise Hagetmau?\n"
+            "- What are the opening hours on Saturdays?\n"
+            "- Does France Pare-Brise handle insurance claims?"
+        ),
+        'fr': (
+            "- Comment prendre rendez-vous chez France Pare-Brise Hagetmau ?\n"
+            "- Quels sont les horaires d'ouverture le samedi ?\n"
+            "- Est-ce que France Pare-Brise gère les démarches avec mon assurance ?"
+        ),
+        'pt': (
+            "- Como marco uma consulta na France Pare-Brise Hagetmau?\n"
+            "- Quais são os horários de funcionamento aos sábados?\n"
+            "- A France Pare-Brise trata de participações de seguros?"
+        )
+    }
+    examples_str = followup_examples.get(lang, followup_examples['en'])
+
     system_prompt = f"""You are a France Pare-Brise / Glassdrive customer service assistant. Your ONLY role is to answer questions about France Pare-Brise and Glassdrive services.
 
 ⚠️ LANGUAGE RULE — MANDATORY: Respond ENTIRELY in {lang_name}. Do NOT use any other language.
@@ -710,9 +729,7 @@ CRITICAL RULES:
 - <write a third real, specific follow-up question in {lang_name} based ONLY on the centers present in the provided Context above>
 
 For example, good follow-ups look like:
-- Comment prendre rendez-vous chez France Pare-Brise Hagetmau ?
-- Quels sont les horaires d'ouverture le samedi ?
-- Est-ce que France Pare-Brise gère les démarches avec mon assurance ?
+{examples_str}
 
 Do not write anything after the follow-up questions."""
 
