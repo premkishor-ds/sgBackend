@@ -894,62 +894,85 @@ User question: {query_text}"""
 #  Dynamic suggestions
 # ──────────────────────────────────────────────────────────────
 
+# High-quality French fallback suggestions — varied so each startup feels fresh
+_FALLBACK_SUGGESTIONS = [
+    "Où se trouve le centre France Pare-Brise le plus proche ?",
+    "Comment prendre rendez-vous chez France Pare-Brise ?",
+    "Quels sont les horaires d'ouverture du samedi ?",
+    "France Pare-Brise prend-il en charge mon assurance ?",
+    "Est-ce que France Pare-Brise propose le remplacement à domicile ?",
+    "Quels véhicules sont acceptés chez France Pare-Brise ?",
+    "Comment contacter un expert France Pare-Brise ?",
+    "France Pare-Brise effectue-t-il le recalibrage ADAS ?",
+]
+
 def get_dynamic_suggestions(context_query=None):
     """Generate dynamic search suggestions.
 
     - If context_query is provided (after a search), generate follow-up questions
-      based on the most relevant chunks for that query.
-    - Otherwise (on startup), generate suggestions from random DB chunks.
+      based on the most relevant chunks for that query (same language as query).
+    - Otherwise (on startup), generate specific French suggestions using real
+      center names and services from the DB.
     """
     try:
         if context_query:
-            # Context-aware: use semantically relevant chunks
+            # ── Post-search: context-aware follow-ups ──────────────
             try:
-                relevant = search_similar(context_query, limit=3)
+                relevant = search_similar(context_query, limit=4)
                 context = "\n\n".join([r['content'][:400] for r in relevant]) if relevant else context_query
             except Exception:
                 context = context_query
 
             system_prompt = (
-                "You are a Glassdrive customer service assistant. Based on the user's last question and "
-                "related context, generate exactly 4 short follow-up search queries.\n"
+                "You are a France Pare-Brise customer service assistant. "
+                "Based on the user's last question and the related context below, "
+                "generate exactly 4 short follow-up search queries.\n"
                 "CRITICAL REQUIREMENTS:\n"
-                "- Respond in the SAME language as the user's last question.\n"
-                "- Each suggestion must be a natural follow-up or related question to the user's question.\n"
-                "- Suggestions must be answerable from the context. Do not invent topics.\n"
-                "- Keep each suggestion concise (max 10 words).\n"
-                "- Respond ONLY with a valid JSON object containing the key \"suggestions\"."
+                "- ALWAYS respond in the SAME language as the user's last question.\n"
+                "- If the question is in French, all 4 suggestions MUST be in French.\n"
+                "- Each suggestion must be a natural, specific follow-up to the user's question.\n"
+                "- Use real center names, services, or details from the context.\n"
+                "- NEVER mention competitor brands. Only France Pare-Brise / Glassdrive.\n"
+                "- Keep each suggestion concise (max 12 words).\n"
+                "- Respond ONLY with a valid JSON object: {\"suggestions\": [\"q1\",\"q2\",\"q3\",\"q4\"]}"
             )
             user_content = (
-                f"Dernière question de l'utilisateur : {context_query}\n\n"
+                f"Dernière question : {context_query}\n\n"
                 f"Contexte associé :\n{context}\n\n"
-                "IMPORTANT: Respond with valid JSON only:\n"
+                "Réponds UNIQUEMENT avec du JSON valide :\n"
                 "{\"suggestions\": [\"q1\", \"q2\", \"q3\", \"q4\"]}"
             )
-        else:
-            # Startup: random chunks
-            results = query('SELECT content FROM document_chunks ORDER BY RANDOM() LIMIT 3')
-            if not results:
-                return [
-                    "Comment prendre rendez-vous ?",
-                    "Quels sont vos horaires ?",
-                    "Quels services proposez-vous ?",
-                    "Comment contacter un centre ?"
-                ]
 
-            context = "\n\n".join([r['content'][:500] for r in results])
+        else:
+            # ── Startup: use real center names + services from DB ──
+            # Pull diverse chunks: mix center names and service descriptions
+            results = query(
+                "SELECT content FROM document_chunks ORDER BY RANDOM() LIMIT 6"
+            )
+            if not results:
+                import random
+                return random.sample(_FALLBACK_SUGGESTIONS, 4)
+
+            context = "\n\n".join([r['content'][:600] for r in results])
+
             system_prompt = (
-                "You are a Glassdrive customer service assistant. Generate exactly 4 short and relevant search "
-                "suggestions based on the provided context.\n"
+                "You are a France Pare-Brise customer service assistant. "
+                "Generate exactly 4 search suggestions a customer would realistically type, "
+                "based ONLY on the France Pare-Brise data provided below.\n"
                 "CRITICAL REQUIREMENTS:\n"
-                "- Every suggestion must be a specific question answerable from the context.\n"
-                "- Be specific to the services, locations, or features mentioned.\n"
-                "- Keep each suggestion concise (max 10 words).\n"
-                "- Respond ONLY with a valid JSON object containing the key \"suggestions\"."
+                "- ALL 4 suggestions MUST be written in FRENCH.\n"
+                "- Use specific center names, cities, services, or details from the context.\n"
+                "- Each suggestion must be a realistic customer question (not generic).\n"
+                "- Mix different topics: location, opening hours, services, appointments, insurance.\n"
+                "- NEVER write generic suggestions like 'How do I book?' — be specific.\n"
+                "- NEVER translate brand name: always write 'France Pare-Brise', never 'France Windshield'.\n"
+                "- Keep each suggestion concise (max 12 words).\n"
+                "- Respond ONLY with valid JSON: {\"suggestions\": [\"q1\",\"q2\",\"q3\",\"q4\"]}"
             )
             user_content = (
-                f"Contexte :\n{context}\n\n"
-                "IMPORTANT: Respond with valid JSON only:\n"
+                f"Données France Pare-Brise :\n{context}\n\n"
+                "Génère 4 suggestions de recherche SPÉCIFIQUES en FRANÇAIS.\n"
+                "Réponds UNIQUEMENT avec du JSON valide :\n"
                 "{\"suggestions\": [\"q1\", \"q2\", \"q3\", \"q4\"]}"
             )
 
@@ -959,10 +982,11 @@ def get_dynamic_suggestions(context_query=None):
                 "model": OLLAMA_GEN_MODEL,
                 "messages": [
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_content}
+                    {"role": "user",   "content": user_content}
                 ],
                 "stream": False,
-                "format": "json"
+                "format": "json",
+                "options": {"temperature": 0.4}
             },
             timeout=60
         )
@@ -972,30 +996,24 @@ def get_dynamic_suggestions(context_query=None):
 
         suggestions = data.get('suggestions') or data.get('questions') or []
 
-        # Deduplicate and sanitise
+        # Deduplicate, strip and validate
         seen = set()
         clean = []
         for s in suggestions:
-            s = s.strip()
-            if s and s not in seen:
+            s = s.strip().strip('"').strip()
+            # Skip if too short, empty, or looks like a placeholder
+            if s and len(s) > 8 and s not in seen and not s.startswith('<'):
                 seen.add(s)
                 clean.append(s)
 
-        if not clean:
-            clean = [
-                "Comment prendre rendez-vous ?",
-                "Quels sont vos horaires ?",
-                "Quels services proposez-vous ?",
-                "Comment contacter un centre ?"
-            ]
+        if len(clean) < 2:
+            import random
+            clean = random.sample(_FALLBACK_SUGGESTIONS, 4)
 
         return clean[:4]
 
     except Exception as err:
         print(f"Error generating dynamic suggestions: {err}")
-        return [
-            "Comment prendre rendez-vous ?",
-            "Quels sont vos horaires ?",
-            "Quels services proposez-vous ?",
-            "Comment contacter un centre ?"
-        ]
+        import random
+        return random.sample(_FALLBACK_SUGGESTIONS, 4)
+
