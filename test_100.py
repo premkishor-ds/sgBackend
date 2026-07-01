@@ -197,7 +197,7 @@ print(f"\n  >> Lang detection: {results['lang_pass']}/100 passed, {results['lang
 domain_keywords = [
     'glassdrive', 'glass', 'vitr', 'vidr', 'para-bris', 'parabris', 'pare-bris', 'parebris',
     'windshield', 'windscreen', 'window', 'repar', 'substitu', 'troc', 'consert',
-    'chang', 'remplac', 'appoint', 'rendez-vous', 'rendezvous', 'marc', 'agend', 'book',
+    'chang', 'remplac', 'appoint', 'rendez-vous', 'rendezvous', 'marc', 'agend',
     'insur', 'segur', 'assur', 'adas', 'calibr', 'hour', 'horair', 'ouvert', 'abert',
     'sabad', 'samedi', 'doming', 'dimanch', 'centr', 'servic', 'camping-car', 'autocaravana',
     'motorhome', 'van', 'camion', 'truck', 'vehic', 'véhic', 'veícul'
@@ -218,7 +218,7 @@ for i, (q, exp_lang, on_topic, desc) in enumerate(QUESTIONS):
         
         query_lower = q.lower()
         has_domain_keyword = any(kw in query_lower for kw in domain_keywords)
-        threshold = 0.50 if has_domain_keyword else 0.70
+        threshold = 0.44 if has_domain_keyword else 0.70
         passes = top_sim >= threshold
         
         correct = passes == on_topic
@@ -263,7 +263,7 @@ for idx in STREAM_TEST_INDICES:
         
         query_lower = q.lower()
         has_domain_keyword = any(kw in query_lower for kw in domain_keywords)
-        threshold = 0.50 if has_domain_keyword else 0.70
+        threshold = 0.44 if has_domain_keyword else 0.70
         chunks = sim_results if top_sim >= threshold else []
 
         events = {"sources": 0, "token": 0, "followup": 0, "done": 0}

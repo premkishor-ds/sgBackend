@@ -8,7 +8,7 @@ from db import init_db, query
 import ragService
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Setup logging
 log_file = os.path.join(os.path.dirname(__file__), 'server.log')
@@ -77,7 +77,7 @@ def search():
         domain_keywords = [
             'glassdrive', 'glass', 'vitr', 'vidr', 'para-bris', 'parabris', 'pare-bris', 'parebris',
             'windshield', 'windscreen', 'window', 'repar', 'substitu', 'troc', 'consert',
-            'chang', 'remplac', 'appoint', 'rendez-vous', 'rendezvous', 'marc', 'agend', 'book',
+            'chang', 'remplac', 'appoint', 'rendez-vous', 'rendezvous', 'marc', 'agend',
             'insur', 'segur', 'assur', 'adas', 'calibr', 'hour', 'horair', 'ouvert', 'abert',
             'sabad', 'samedi', 'doming', 'dimanch', 'centr', 'servic', 'camping-car', 'autocaravana',
             'motorhome', 'van', 'camion', 'truck', 'vehic', 'véhic', 'veícul'
@@ -85,7 +85,7 @@ def search():
         
         query_lower = query_text.lower()
         has_domain_keyword = any(kw in query_lower for kw in domain_keywords)
-        threshold = 0.50 if has_domain_keyword else 0.70
+        threshold = 0.44 if has_domain_keyword else 0.70
         
         if top_sim < threshold:
             log_message(f"Off-topic query rejected (similarity: {top_sim:.3f}, threshold: {threshold:.2f}, keyword: {has_domain_keyword}): {query_text}")

@@ -205,3 +205,266 @@
  * Running on http://127.0.0.1:8000
  * Running on http://192.168.9.118:8000
 [2026-06-19 13:05:28,366] [33mPress CTRL+C to quit[0m
+[2026-06-19 14:11:07,476] 127.0.0.1 - - [19/Jun/2026 14:11:07] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-19 14:11:09,525] 127.0.0.1 - - [19/Jun/2026 14:11:09] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-19 14:11:09,835] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:11:10,633] 127.0.0.1 - - [19/Jun/2026 14:11:10] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:11:17,279] 127.0.0.1 - - [19/Jun/2026 14:11:17] "GET /suggestions?context=services%20provided%20in%20Glassdrive%20Fátima HTTP/1.1" 200 -
+[2026-06-19 14:15:56,680] Server running on http://localhost:8000
+[2026-06-19 14:15:56,733] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 14:15:56,733] [33mPress CTRL+C to quit[0m
+[2026-06-19 14:16:32,532] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:16:32,795] 127.0.0.1 - - [19/Jun/2026 14:16:32] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:17:32,078] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:17:32,304] 127.0.0.1 - - [19/Jun/2026 14:17:32] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:17:37,232] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:17:37,551] 127.0.0.1 - - [19/Jun/2026 14:17:37] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:18:54,905] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:18:55,250] 127.0.0.1 - - [19/Jun/2026 14:18:55] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:19:00,850] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:19:01,163] 127.0.0.1 - - [19/Jun/2026 14:19:01] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:19:27,862] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:19:28,120] 127.0.0.1 - - [19/Jun/2026 14:19:28] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:19:32,448] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:19:32,666] 127.0.0.1 - - [19/Jun/2026 14:19:32] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:19:49,377] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:19:49,586] 127.0.0.1 - - [19/Jun/2026 14:19:49] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:19:56,835] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:19:57,055] 127.0.0.1 - - [19/Jun/2026 14:19:57] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:20:34,649] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:20:34,890] 127.0.0.1 - - [19/Jun/2026 14:20:34] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:20:40,011] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:20:40,265] 127.0.0.1 - - [19/Jun/2026 14:20:40] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:21:03,037] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:21:03,287] 127.0.0.1 - - [19/Jun/2026 14:21:03] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:21:08,399] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:21:08,623] 127.0.0.1 - - [19/Jun/2026 14:21:08] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:21:35,287] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:21:35,536] 127.0.0.1 - - [19/Jun/2026 14:21:35] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:21:38,956] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:21:39,263] 127.0.0.1 - - [19/Jun/2026 14:21:39] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:21:56,031] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:21:56,258] 127.0.0.1 - - [19/Jun/2026 14:21:56] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:22:01,142] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:22:01,361] 127.0.0.1 - - [19/Jun/2026 14:22:01] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:23:00,613] Server running on http://localhost:8000
+[2026-06-19 14:23:00,663] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 14:23:00,664] [33mPress CTRL+C to quit[0m
+[2026-06-19 14:23:07,239] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:23:07,507] 127.0.0.1 - - [19/Jun/2026 14:23:07] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:23:14,643] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:23:14,896] 127.0.0.1 - - [19/Jun/2026 14:23:14] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:24:43,914] Setup error: relation "document_chunks" does not exist
+LINE 1: INSERT INTO document_chunks (content, metadata, embedding) V...
+                    ^
+
+[2026-06-19 14:25:28,450] Server running on http://localhost:8000
+[2026-06-19 14:25:28,513] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 14:25:28,513] [33mPress CTRL+C to quit[0m
+[2026-06-19 14:25:32,767] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:25:33,046] 127.0.0.1 - - [19/Jun/2026 14:25:33] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:25:39,447] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:25:39,713] 127.0.0.1 - - [19/Jun/2026 14:25:39] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:26:34,826] Server running on http://localhost:8000
+[2026-06-19 14:26:34,867] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-19 14:26:34,867] [33mPress CTRL+C to quit[0m
+[2026-06-19 14:26:49,031] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': {'lat': 37.354107, 'lng': -121.955238}}
+[2026-06-19 14:26:49,229] 127.0.0.1 - - [19/Jun/2026 14:26:49] "POST /search HTTP/1.1" 200 -
+[2026-06-19 14:26:54,144] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-19 14:26:54,319] 127.0.0.1 - - [19/Jun/2026 14:26:54] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:46:37,399] Server running on http://localhost:8000
+[2026-06-23 12:47:21,556] Server running on http://localhost:8000
+[2026-06-23 12:48:09,656] Server running on http://localhost:8000
+[2026-06-23 12:48:09,701] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-23 12:48:09,701] [33mPress CTRL+C to quit[0m
+[2026-06-23 12:49:09,184] Server running on http://localhost:8000
+[2026-06-23 12:50:04,073] Server running on http://localhost:8000
+[2026-06-23 12:51:21,831] Server running on http://localhost:8000
+[2026-06-23 12:51:21,877] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8000
+[2026-06-23 12:51:21,878] [33mPress CTRL+C to quit[0m
+[2026-06-23 12:51:28,682] 127.0.0.1 - - [23/Jun/2026 12:51:28] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 12:51:29,756] Search request received: {'query': 'Contact Glassdrive São João da Madeira?', 'location': None}
+[2026-06-23 12:51:29,973] 127.0.0.1 - - [23/Jun/2026 12:51:29] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:51:34,556] Search request received: {'query': 'Quais os horários de funcionamento do centro Glassdrive São João da Madeira?', 'location': None}
+[2026-06-23 12:51:34,761] 127.0.0.1 - - [23/Jun/2026 12:51:34] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:51:35,439] 127.0.0.1 - - [23/Jun/2026 12:51:35] "GET /suggestions?context=Contact%20Glassdrive%20São%20João%20da%20Madeira? HTTP/1.1" 200 -
+[2026-06-23 12:51:40,787] Search request received: {'query': 'Vocês fazem calibração ADAS em sua loja de São João da Madeira?', 'location': None}
+[2026-06-23 12:51:40,957] 127.0.0.1 - - [23/Jun/2026 12:51:40] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:51:41,241] 127.0.0.1 - - [23/Jun/2026 12:51:41] "GET /suggestions?context=Quais%20os%20horários%20de%20funcionamento%20do%20centro%20Glassdrive%20São%20João%20da%20Madeira? HTTP/1.1" 200 -
+[2026-06-23 12:51:46,625] 127.0.0.1 - - [23/Jun/2026 12:51:46] "GET /suggestions?context=Vocês%20fazem%20calibração%20ADAS%20em%20sua%20loja%20de%20São%20João%20da%20Madeira? HTTP/1.1" 200 -
+[2026-06-23 12:51:48,008] 127.0.0.1 - - [23/Jun/2026 12:51:48] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 12:51:48,723] Search request received: {'query': 'hello', 'location': None}
+[2026-06-23 12:51:48,891] Off-topic query rejected (similarity: 0.462, threshold: 0.70, keyword: False): hello
+[2026-06-23 12:51:48,893] 127.0.0.1 - - [23/Jun/2026 12:51:48] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:51:50,683] 127.0.0.1 - - [23/Jun/2026 12:51:50] "GET /suggestions?context=hello HTTP/1.1" 200 -
+[2026-06-23 12:51:53,398] Search request received: {'query': 'Where is the nearest Glassdrive centre?', 'location': {'lat': 26.79983, 'lng': 75.857081}}
+[2026-06-23 12:51:53,569] 127.0.0.1 - - [23/Jun/2026 12:51:53] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:51:59,524] 127.0.0.1 - - [23/Jun/2026 12:51:59] "GET /suggestions?context=Where%20is%20the%20nearest%20Glassdrive%20centre? HTTP/1.1" 200 -
+[2026-06-23 12:53:13,800] Server running on http://localhost:8000
+[2026-06-23 12:53:13,831] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8000
+[2026-06-23 12:53:13,831] [33mPress CTRL+C to quit[0m
+[2026-06-23 12:53:26,418] 127.0.0.1 - - [23/Jun/2026 12:53:26] "[31m[1mPOST /search HTTP/1.1[0m" 400 -
+[2026-06-23 12:53:32,315] Search request received: {'query': 'hello'}
+[2026-06-23 12:53:32,482] Off-topic query rejected (similarity: 0.462, threshold: 0.70, keyword: False): hello
+[2026-06-23 12:53:32,484] 127.0.0.1 - - [23/Jun/2026 12:53:32] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:53:38,644] Search request received: {'query': 'bonjour'}
+[2026-06-23 12:53:38,803] Off-topic query rejected (similarity: 0.438, threshold: 0.70, keyword: False): bonjour
+[2026-06-23 12:53:38,803] 127.0.0.1 - - [23/Jun/2026 12:53:38] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:54:24,534] Server running on http://localhost:8000
+[2026-06-23 12:54:24,570] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8000
+[2026-06-23 12:54:24,570] [33mPress CTRL+C to quit[0m
+[2026-06-23 12:54:32,982] Search request received: {'query': 'hello'}
+[2026-06-23 12:54:33,182] Off-topic query rejected (similarity: 0.462, threshold: 0.70, keyword: False): hello
+[2026-06-23 12:54:33,185] 127.0.0.1 - - [23/Jun/2026 12:54:33] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:54:41,412] Search request received: {'query': 'bonjour'}
+[2026-06-23 12:54:41,589] Off-topic query rejected (similarity: 0.438, threshold: 0.70, keyword: False): bonjour
+[2026-06-23 12:54:41,589] 127.0.0.1 - - [23/Jun/2026 12:54:41] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:54:48,750] 127.0.0.1 - - [23/Jun/2026 12:54:48] "[31m[1mPOST /search HTTP/1.1[0m" 400 -
+[2026-06-23 12:54:57,414] Search request received: {'query': 'ola'}
+[2026-06-23 12:54:57,581] Off-topic query rejected (similarity: 0.405, threshold: 0.70, keyword: False): ola
+[2026-06-23 12:54:57,583] 127.0.0.1 - - [23/Jun/2026 12:54:57] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:56:35,006] 127.0.0.1 - - [23/Jun/2026 12:56:35] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 12:57:11,426] 127.0.0.1 - - [23/Jun/2026 12:57:11] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 12:57:11,740] Search request received: {'query': 'hello', 'location': None}
+[2026-06-23 12:57:11,990] Off-topic query rejected (similarity: 0.462, threshold: 0.70, keyword: False): hello
+[2026-06-23 12:57:11,993] 127.0.0.1 - - [23/Jun/2026 12:57:11] "POST /search HTTP/1.1" 200 -
+[2026-06-23 12:57:13,738] 127.0.0.1 - - [23/Jun/2026 12:57:13] "GET /suggestions?context=hello HTTP/1.1" 200 -
+[2026-06-23 12:58:02,305] Server running on http://localhost:8000
+[2026-06-23 12:58:02,363] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-23 12:58:02,364] [33mPress CTRL+C to quit[0m
+[2026-06-23 12:59:35,894] 127.0.0.1 - - [23/Jun/2026 12:59:35] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:00:37,477] 192.168.9.118 - - [23/Jun/2026 13:00:37] "GET / HTTP/1.1" 200 -
+[2026-06-23 13:00:37,562] 192.168.9.118 - - [23/Jun/2026 13:00:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2026-06-23 13:00:43,007] 192.168.9.118 - - [23/Jun/2026 13:00:43] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:01:07,530] 127.0.0.1 - - [23/Jun/2026 13:01:07] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:01:07,794] Search request received: {'query': 'hello', 'location': None}
+[2026-06-23 13:01:08,073] Off-topic query rejected (similarity: 0.462, threshold: 0.70, keyword: False): hello
+[2026-06-23 13:01:08,075] 127.0.0.1 - - [23/Jun/2026 13:01:08] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:01:09,834] 127.0.0.1 - - [23/Jun/2026 13:01:09] "GET /suggestions?context=hello HTTP/1.1" 200 -
+[2026-06-23 13:01:20,317] 127.0.0.1 - - [23/Jun/2026 13:01:20] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:02:12,548] 192.168.9.118 - - [23/Jun/2026 13:02:12] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:05:14,743] 192.168.9.118 - - [23/Jun/2026 13:05:14] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:05:14,832] 192.168.9.118 - - [23/Jun/2026 13:05:14] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2026-06-23 13:06:59,887] 127.0.0.1 - - [23/Jun/2026 13:06:59] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:06:59,987] 127.0.0.1 - - [23/Jun/2026 13:06:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2026-06-23 13:27:01,753] Server running on http://localhost:8000
+[2026-06-23 13:27:01,793] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-23 13:27:01,793] [33mPress CTRL+C to quit[0m
+[2026-06-23 13:28:01,119] 192.168.9.118 - - [23/Jun/2026 13:28:01] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:28:09,069] 192.168.9.118 - - [23/Jun/2026 13:28:09] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:29:19,421] 192.168.9.118 - - [23/Jun/2026 13:29:19] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:29:22,464] 192.168.9.118 - - [23/Jun/2026 13:29:22] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:29:22,469] Search request received: {'query': 'hello', 'location': None}
+[2026-06-23 13:29:22,676] Off-topic query rejected (similarity: 0.462, threshold: 0.70, keyword: False): hello
+[2026-06-23 13:29:22,687] 192.168.9.118 - - [23/Jun/2026 13:29:22] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:29:24,157] 192.168.9.118 - - [23/Jun/2026 13:29:24] "GET /suggestions?context=hello HTTP/1.1" 200 -
+[2026-06-23 13:29:24,240] Search request received: {'query': 'What services do you offer?', 'location': None}
+[2026-06-23 13:29:24,402] 192.168.9.118 - - [23/Jun/2026 13:29:24] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:29:28,686] 192.168.9.118 - - [23/Jun/2026 13:29:28] "GET /suggestions?context=What%20services%20do%20you%20offer? HTTP/1.1" 200 -
+[2026-06-23 13:30:16,530] 192.168.9.118 - - [23/Jun/2026 13:30:16] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:30:16,535] Search request received: {'query': 'How long does it take to apply water repellent?', 'location': None}
+[2026-06-23 13:30:16,767] 192.168.9.118 - - [23/Jun/2026 13:30:16] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:30:19,923] 192.168.9.118 - - [23/Jun/2026 13:30:19] "GET /suggestions?context=How%20long%20does%20it%20take%20to%20apply%20water%20repellent? HTTP/1.1" 200 -
+[2026-06-23 13:30:24,142] 192.168.9.153 - - [23/Jun/2026 13:30:24] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-23 13:30:26,452] 192.168.9.153 - - [23/Jun/2026 13:30:26] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:30:26,463] Search request received: {'query': 'Where is Glassdrive Tomar located?', 'location': None}
+[2026-06-23 13:30:26,627] 192.168.9.153 - - [23/Jun/2026 13:30:26] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:30:30,961] 192.168.9.153 - - [23/Jun/2026 13:30:30] "GET /suggestions?context=Where%20is%20Glassdrive%20Tomar%20located? HTTP/1.1" 200 -
+[2026-06-23 13:30:52,911] 192.168.9.153 - - [23/Jun/2026 13:30:52] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:30:52,918] Search request received: {'query': 'How do I book an appointment at Glassdrive Tomar?', 'location': None}
+[2026-06-23 13:30:53,087] 192.168.9.153 - - [23/Jun/2026 13:30:53] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:30:58,371] 192.168.9.153 - - [23/Jun/2026 13:30:58] "GET /suggestions?context=How%20do%20I%20book%20an%20appointment%20at%20Glassdrive%20Tomar? HTTP/1.1" 200 -
+[2026-06-23 13:31:33,346] 192.168.9.118 - - [23/Jun/2026 13:31:33] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-23 13:31:33,351] Search request received: {'query': 'How often should I have the water repellent applied?', 'location': None}
+[2026-06-23 13:31:33,559] 192.168.9.118 - - [23/Jun/2026 13:31:33] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:31:36,732] 192.168.9.118 - - [23/Jun/2026 13:31:36] "GET /suggestions?context=How%20often%20should%20I%20have%20the%20water%20repellent%20applied? HTTP/1.1" 200 -
+[2026-06-23 13:31:37,896] Search request received: {'query': 'What other services does Glassdrive offer for windshield maintenance?', 'location': None}
+[2026-06-23 13:31:38,120] 192.168.9.118 - - [23/Jun/2026 13:31:38] "POST /search HTTP/1.1" 200 -
+[2026-06-23 13:31:42,288] 192.168.9.118 - - [23/Jun/2026 13:31:42] "GET /suggestions?context=What%20other%20services%20does%20Glassdrive%20offer%20for%20windshield%20maintenance? HTTP/1.1" 200 -
+[2026-06-24 11:12:48,357] Server running on http://localhost:8000
+[2026-06-24 11:12:48,413] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-24 11:12:48,414] [33mPress CTRL+C to quit[0m
+[2026-06-24 11:13:13,996] 192.168.9.118 - - [24/Jun/2026 11:13:13] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-24 11:13:22,383] 192.168.9.118 - - [24/Jun/2026 11:13:22] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 11:13:22,391] Search request received: {'query': 'hello', 'location': None}
+[2026-06-24 11:13:22,572] Off-topic query rejected (similarity: 0.462, threshold: 0.70, keyword: False): hello
+[2026-06-24 11:13:22,574] 192.168.9.118 - - [24/Jun/2026 11:13:22] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:13:24,276] 192.168.9.118 - - [24/Jun/2026 11:13:24] "GET /suggestions?context=hello HTTP/1.1" 200 -
+[2026-06-24 11:13:26,578] 192.168.9.118 - - [24/Jun/2026 11:13:26] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-24 11:13:27,578] 192.168.9.118 - - [24/Jun/2026 11:13:27] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 11:13:27,583] Search request received: {'query': 'services provided in Glassdrive Fátima', 'location': None}
+[2026-06-24 11:13:27,742] 192.168.9.118 - - [24/Jun/2026 11:13:27] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:13:32,184] 192.168.9.118 - - [24/Jun/2026 11:13:32] "GET /suggestions?context=services%20provided%20in%20Glassdrive%20Fátima HTTP/1.1" 200 -
+[2026-06-24 11:14:01,910] 192.168.9.118 - - [24/Jun/2026 11:14:01] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 11:14:01,915] Search request received: {'query': 'How do I book an appointment at Glassdrive Fátima?', 'location': None}
+[2026-06-24 11:14:02,115] 192.168.9.118 - - [24/Jun/2026 11:14:02] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:14:07,704] 192.168.9.118 - - [24/Jun/2026 11:14:07] "GET /suggestions?context=How%20do%20I%20book%20an%20appointment%20at%20Glassdrive%20Fátima? HTTP/1.1" 200 -
+[2026-06-24 11:15:51,282] 192.168.9.118 - - [24/Jun/2026 11:15:51] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-24 11:15:55,547] 192.168.9.118 - - [24/Jun/2026 11:15:55] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 11:15:55,554] Search request received: {'query': 'store time', 'location': None}
+[2026-06-24 11:15:55,730] Off-topic query rejected (similarity: 0.466, threshold: 0.70, keyword: False): store time
+[2026-06-24 11:15:55,733] 192.168.9.118 - - [24/Jun/2026 11:15:55] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:15:57,411] 192.168.9.118 - - [24/Jun/2026 11:15:57] "GET /suggestions?context=store%20time HTTP/1.1" 200 -
+[2026-06-24 11:15:58,470] Search request received: {'query': 'What services do you offer?', 'location': None}
+[2026-06-24 11:15:58,645] 192.168.9.118 - - [24/Jun/2026 11:15:58] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:16:02,944] 192.168.9.118 - - [24/Jun/2026 11:16:02] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 11:16:02,951] Search request received: {'query': 'What is the process for booking a headlight polishing appointment?', 'location': None}
+[2026-06-24 11:16:03,192] 192.168.9.118 - - [24/Jun/2026 11:16:03] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:16:03,214] 192.168.9.118 - - [24/Jun/2026 11:16:03] "GET /suggestions?context=What%20services%20do%20you%20offer? HTTP/1.1" 200 -
+[2026-06-24 11:16:06,695] 192.168.9.118 - - [24/Jun/2026 11:16:06] "GET /suggestions?context=What%20is%20the%20process%20for%20booking%20a%20headlight%20polishing%20appointment? HTTP/1.1" 200 -
+[2026-06-24 11:20:03,461] 192.168.9.135 - - [24/Jun/2026 11:20:03] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-24 11:20:19,187] 192.168.9.135 - - [24/Jun/2026 11:20:19] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 11:20:19,196] Search request received: {'query': 'How to contact Glassdrive São Miguel Relva?', 'location': None}
+[2026-06-24 11:20:19,371] 192.168.9.135 - - [24/Jun/2026 11:20:19] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:20:24,708] 192.168.9.135 - - [24/Jun/2026 11:20:24] "GET /suggestions?context=How%20to%20contact%20Glassdrive%20São%20Miguel%20Relva? HTTP/1.1" 200 -
+[2026-06-24 11:20:49,485] 192.168.9.135 - - [24/Jun/2026 11:20:49] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-24 11:22:57,532] 192.168.9.135 - - [24/Jun/2026 11:22:57] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 11:22:57,543] Search request received: {'query': 'wahat is glass drive', 'location': None}
+[2026-06-24 11:22:57,756] 192.168.9.135 - - [24/Jun/2026 11:22:57] "POST /search HTTP/1.1" 200 -
+[2026-06-24 11:23:02,345] 192.168.9.135 - - [24/Jun/2026 11:23:02] "GET /suggestions?context=wahat%20is%20glass%20drive HTTP/1.1" 200 -
+[2026-06-24 12:56:07,450] 192.168.9.135 - - [24/Jun/2026 12:56:07] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-24 12:56:37,836] 192.168.9.135 - - [24/Jun/2026 12:56:37] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 12:56:37,848] Search request received: {'query': 'Glassdrive Gaia Sto Ovídeo address?', 'location': None}
+[2026-06-24 12:56:38,581] 192.168.9.135 - - [24/Jun/2026 12:56:38] "POST /search HTTP/1.1" 200 -
+[2026-06-24 12:56:43,868] 192.168.9.135 - - [24/Jun/2026 12:56:43] "GET /suggestions?context=Glassdrive%20Gaia%20Sto%20Ovídeo%20address? HTTP/1.1" 200 -
+[2026-06-24 12:57:13,777] 192.168.9.135 - - [24/Jun/2026 12:57:13] "OPTIONS /search HTTP/1.1" 200 -
+[2026-06-24 12:57:13,787] Search request received: {'query': 'what is glass drive', 'location': None}
+[2026-06-24 12:57:13,984] 192.168.9.135 - - [24/Jun/2026 12:57:13] "POST /search HTTP/1.1" 200 -
+[2026-06-24 12:57:18,267] 192.168.9.135 - - [24/Jun/2026 12:57:18] "GET /suggestions?context=what%20is%20glass%20drive HTTP/1.1" 200 -
+[2026-06-24 12:59:06,426] 192.168.9.135 - - [24/Jun/2026 12:59:06] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-24 15:04:32,613] 192.168.9.135 - - [24/Jun/2026 15:04:32] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-30 14:48:11,592] Server running on http://localhost:8000
+[2026-06-30 14:48:11,681] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://192.168.9.118:8000
+[2026-06-30 14:48:11,681] [33mPress CTRL+C to quit[0m
+[2026-06-30 14:49:14,693] 127.0.0.1 - - [30/Jun/2026 14:49:14] "GET /suggestions HTTP/1.1" 200 -
+[2026-06-30 14:49:25,313] 192.168.9.118 - - [30/Jun/2026 14:49:25] "GET /suggestions HTTP/1.1" 200 -

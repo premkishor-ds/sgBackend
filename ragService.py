@@ -45,43 +45,116 @@ def process_data(items):
     processed_items = []
 
     for item in items:
-        text_parts = []
+        # Check if this is a location object
+        is_location = False
+        data_obj = item.get('data', {})
+        if isinstance(data_obj, dict) and data_obj.get('type') == 'location':
+            is_location = True
 
-        def walk_obj(obj):
-            if isinstance(obj, dict):
-                for key, val in obj.items():
-                    if key.startswith('_') or key in [
-                        'metadata', 'id', 'created_at', 'search_vector', 'slug',
-                        'thumbnails', 'url', 'image', 'height', 'width', 'locale',
-                        'primary_key', 'image_url', 'favicon'
-                    ]:
-                        continue
-                    if key in ['hours', 'monday', 'tuesday', 'wednesday', 'thursday',
-                               'friday', 'saturday', 'sunday']:
-                        text_parts.append(f"{key.capitalize()}:")
-                    if isinstance(val, (dict, list)):
-                        walk_obj(val)
-                    elif val and not isinstance(val, bool):
-                        str_val = str(val).strip()
-                        if (str_val.startswith(('http', '//')) or
-                                str_val.endswith(('.png', '.jpg', '.jpeg', '.webp', '.pdf'))):
+        if is_location:
+            # Format location data structured
+            name = data_obj.get('name', 'Glassdrive Center')
+            addr = data_obj.get('address', {})
+            line1 = addr.get('line1', '')
+            city = addr.get('city', '')
+            postal = addr.get('postalCode', '')
+            country = addr.get('countryCode', 'PT')
+            full_address = f"{line1}, {city}, {postal}, {country}"
+            
+            phone = data_obj.get('mainPhone', '')
+            desc = data_obj.get('description', '') or data_obj.get('c_businessDescription', '')
+            
+            # Format hours
+            hours_text = ""
+            hours_obj = data_obj.get('hours', {})
+            if isinstance(hours_obj, dict):
+                days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+                intervals = []
+                for day in days:
+                    day_info = hours_obj.get(day, {})
+                    if day_info.get('isClosed'):
+                        intervals.append(f"  {day.capitalize()}: Closed")
+                    else:
+                        intervals_list = day_info.get('openIntervals', [])
+                        if intervals_list:
+                            time_strs = [f"{t.get('start', '')}-{t.get('end', '')}" for t in intervals_list]
+                            intervals.append(f"  {day.capitalize()}: {', '.join(time_strs)}")
+                        else:
+                            intervals.append(f"  {day.capitalize()}: Closed")
+                hours_text = "\n".join(intervals)
+
+            # Format services
+            services = []
+            core_services = data_obj.get('c_relatedCoreServices', [])
+            if isinstance(core_services, list):
+                for s in core_services:
+                    s_name = s.get('name') or s.get('c_serviceName')
+                    if s_name:
+                        services.append(s_name)
+            add_services = data_obj.get('c_relatedAdditionalService', [])
+            if isinstance(add_services, list):
+                for s in add_services:
+                    s_name = s.get('name') or s.get('c_serviceName')
+                    if s_name:
+                        services.append(s_name)
+            
+            services_text = "\n".join([f"  - {s}" for s in services])
+            
+            # Format coordinates
+            coords_text = ""
+            coords = data_obj.get('geocodedCoordinate') or data_obj.get('yextDisplayCoordinate')
+            if isinstance(coords, dict):
+                coords_text = f"latitude {coords.get('latitude', '')}\nlongitude {coords.get('longitude', '')}"
+
+            text = f"""Center Name: {name}
+Address: {full_address}
+Phone: {phone}
+{coords_text}
+Description: {desc}
+Opening Hours:
+{hours_text}
+Services Offered:
+{services_text}"""
+            
+            title = name
+        else:
+            # Walk object fallback for general services html/jsons
+            text_parts = []
+            def walk_obj(obj):
+                if isinstance(obj, dict):
+                    for key, val in obj.items():
+                        if key.startswith('_') or key in [
+                            'metadata', 'id', 'created_at', 'search_vector', 'slug',
+                            'thumbnails', 'url', 'image', 'height', 'width', 'locale',
+                            'primary_key', 'image_url', 'favicon'
+                        ]:
                             continue
-                        if key in ['start', 'end', 'date'] or ':' in str_val:
-                            text_parts.append(f"{key} {str_val}")
-                        elif not (re.match(r'^[0-9\s\-\.\/]+$', str_val) or len(str_val) < 3):
-                            text_parts.append(str_val)
-            elif isinstance(obj, list):
-                for item_in_list in obj:
-                    walk_obj(item_in_list)
+                        if key in ['hours', 'monday', 'tuesday', 'wednesday', 'thursday',
+                                   'friday', 'saturday', 'sunday']:
+                            text_parts.append(f"{key.capitalize()}:")
+                        if isinstance(val, (dict, list)):
+                            walk_obj(val)
+                        elif val and not isinstance(val, bool):
+                            str_val = str(val).strip()
+                            if (str_val.startswith(('http', '//')) or
+                                    str_val.endswith(('.png', '.jpg', '.jpeg', '.webp', '.pdf'))):
+                                continue
+                            if key in ['start', 'end', 'date'] or ':' in str_val:
+                                text_parts.append(f"{key} {str_val}")
+                            elif not (re.match(r'^[0-9\s\-\.\/]+$', str_val) or len(str_val) < 3):
+                                text_parts.append(str_val)
+                elif isinstance(obj, list):
+                    for item_in_list in obj:
+                        walk_obj(item_in_list)
 
-        walk_obj(item)
-
-        title = item.get('metadata', {}).get('title') or item.get('title')
-        if not title and 'data' in item:
-            title = item['data'].get('name') or item['data'].get('title')
+            walk_obj(item)
+            text = '\n'.join(text_parts)
+            title = item.get('metadata', {}).get('title') or item.get('title')
+            if not title and 'data' in item:
+                title = item['data'].get('name') or item['data'].get('title')
 
         processed_items.append({
-            'text': '\n'.join(text_parts),
+            'text': text,
             'metadata': {
                 'source': item.get('_source', 'unknown'),
                 'original_title': title or 'Untitled'
@@ -162,14 +235,37 @@ def search_similar(query_text, limit=5):
             return []
 
         results = []
+        
+        # Clean query for robust matching: keep only standard a-z letters
+        query_clean = ''.join(c for c in query_text.lower() if 'a' <= c <= 'z')
+
         for row in rows:
             chunk_emb = row['embedding']
             if not chunk_emb:
                 continue
             similarity = cosine_similarity(query_emb, chunk_emb)
+
+            meta = row['metadata']
+            if isinstance(meta, str):
+                try:
+                    meta = json.loads(meta)
+                except:
+                    meta = {}
+            elif not isinstance(meta, dict):
+                meta = {}
+
+            title = meta.get('original_title', '').lower()
+            center_name = title.replace('glassdrive', '').strip()
+            
+            # Clean center name for robust matching: keep only standard a-z letters
+            center_clean = ''.join(c for c in center_name if 'a' <= c <= 'z')
+            
+            if center_clean and center_clean in query_clean:
+                similarity += 10.0
+
             results.append({
                 'content': row['content'],
-                'metadata': row['metadata'],
+                'metadata': meta,
                 'similarity': similarity
             })
 
@@ -210,6 +306,8 @@ _LANG_WORDS = {
         # Other common English words
         'any', 'all', 'more', 'please', 'specific', 'available',
         'nearest', 'closest', 'nearby', 'open', 'closed',
+        # Greetings
+        'hello', 'hi', 'hey', 'howdy', 'greetings',
     ],
     'fr': [
         'où', 'comment', 'quel', 'quelle', 'quels', 'quelles', 'qui', 'pourquoi',
@@ -219,6 +317,8 @@ _LANG_WORDS = {
         'mon', 'ma', 'mes', 'avec', 'pour', 'dans', 'sur',
         'avoir', 'être', 'faire', 'prendre', 'trouver',
         'service', 'services', 'centre', 'horaires', 'rendez-vous',
+        # Greetings
+        'bonjour', 'salut', 'bonsoir', 'coucou',
     ],
     'pt': [
         # Question/relative words
@@ -240,6 +340,8 @@ _LANG_WORDS = {
         'para-brisas', 'substituição', 'marcação', 'processo', 'aberta',
         'sábado', 'preços', 'orçamento', 'garantia', 'contacto',
         'produtos', 'presidente', 'melhor',
+        # Greetings
+        'olá', 'ola', 'oi', 'bom dia', 'boa tarde', 'boa noite',
     ],
 }
 
@@ -256,12 +358,15 @@ def detect_language(text: str) -> str:
     PT_STRONG = {'da', 'dos', 'das', 'ao', 'aos', 'pelo', 'pela', 'num', 'numa',
                  'faz', 'fazer', 'trata', 'foi', 'será', 'pode', 'há', 'quem', 'qual', 'quais',
                  'para-brisas', 'substituição', 'marcação', 'sábado',
-                 'serviços', 'horário', 'reparação', 'vidro', 'oferece', 'vende'}
+                 'serviços', 'horário', 'reparação', 'vidro', 'oferece', 'vende',
+                 'olá', 'ola', 'oi', 'bom dia', 'boa tarde', 'boa noite'}
     FR_STRONG = {'où', 'est-ce', 'puis-je', 'rendez-vous', 'êtes', 'être', 'horaires',
-                 'les', 'des', 'aux', 'du'}
+                 'les', 'des', 'aux', 'du',
+                 'bonjour', 'salut', 'bonsoir', 'coucou'}
     EN_STRONG = {'the', 'is', 'are', 'was', 'were', 'does', 'did', 'will', 'would',
                  'should', 'book', 'windshield', 'insurance', 'warranty', 'nearest',
-                 'replacement', 'repair', 'services', 'appointment', 'location'}
+                 'replacement', 'repair', 'services', 'appointment', 'location',
+                 'hello', 'hi', 'hey', 'howdy', 'greetings'}
 
     for w in words:
         if w in PT_STRONG: scores['pt'] += 3
@@ -281,6 +386,44 @@ def detect_language(text: str) -> str:
 # ──────────────────────────────────────────────────────────────
 #  Streaming answer generation
 # ──────────────────────────────────────────────────────────────
+
+def haversine_distance(lat1, lon1, lat2, lon2):
+    """Compute haversine distance in km between two coordinate points."""
+    r = 6371.0
+    lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+    c = 2 * math.asin(math.sqrt(a))
+    return r * c
+
+def extract_coords(text):
+    """Parse latitude and longitude from the text content of a chunk."""
+    lat_match = re.search(r'latitude\s+([-+]?[0-9]*\.?[0-9]+)', text)
+    lng_match = re.search(r'longitude\s+([-+]?[0-9]*\.?[0-9]+)', text)
+    if lat_match and lng_match:
+        return float(lat_match.group(1)), float(lng_match.group(1))
+    return None
+
+def is_greeting(query_text):
+    """Determine if query is a simple greeting."""
+    q = re.sub(r'[^\w\s]', '', query_text.lower().strip())
+    greetings = {
+        'hi', 'hello', 'hey', 'greetings', 'howdy', 'good morning', 'good afternoon', 'good evening',
+        'bonjour', 'salut', 'bonsoir', 'coucou',
+        'olá', 'ola', 'oi', 'bom dia', 'boa tarde', 'boa noite'
+    }
+    return q in greetings or any(q.startswith(g + ' ') for g in greetings)
+
+def is_near_query(query_text):
+    """Determine if query is asking for closest/nearest centers."""
+    q = query_text.lower()
+    near_words = [
+        'nearest', 'closest', 'nearby', 'near me', 'near you',
+        'próximo', 'proximo', 'mais perto', 'perto de mim',
+        'proche', 'plus proche', 'près de', 'pres de'
+    ]
+    return any(w in q for w in near_words)
 
 def generate_answer_stream(query_text, context_chunks, location=None, lang=None):
     """Generate streaming answer and follow-up questions from Ollama."""
@@ -312,11 +455,41 @@ def generate_answer_stream(query_text, context_chunks, location=None, lang=None)
             "Não hesite em fazer-nos uma pergunta sobre a Glassdrive!"
         ),
     }
+
+    GREETINGS = {
+        'en': (
+            "Hello! I am your Glassdrive customer service assistant. "
+            "How can I help you with our centres, services, or bookings today?"
+        ),
+        'fr': (
+            "Bonjour ! Je suis votre assistant service client Glassdrive. "
+            "Comment puis-je vous aider avec nos centres, services ou rendez-vous aujourd'hui ?"
+        ),
+        'pt': (
+            "Olá! Sou o seu assistente de apoio ao cliente da Glassdrive. "
+            "Como posso ajudar com os nossos centros, serviços ou marcações hoje?"
+        ),
+    }
+
     OFF_TOPIC_FOLLOWUPS = {
         'en': ["Where is the nearest Glassdrive centre?", "What services do you offer?", "How can I book an appointment?"],
         'fr': ["Où se trouve le centre Glassdrive le plus proche ?", "Quels services proposez-vous ?", "Comment prendre rendez-vous ?"],
         'pt': ["Onde fica o centro Glassdrive mais próximo?", "Que serviços oferecem?", "Como posso marcar uma consulta?"],
     }
+
+    if is_greeting(query_text):
+        yield json.dumps({'type': 'sources', 'sources': []}) + '\n'
+        yield json.dumps({
+            'type': 'token',
+            'token': GREETINGS.get(lang, GREETINGS['en'])
+        }) + '\n'
+        yield json.dumps({
+            'type': 'followup',
+            'followup': OFF_TOPIC_FOLLOWUPS.get(lang, OFF_TOPIC_FOLLOWUPS['en'])
+        }) + '\n'
+        yield json.dumps({'type': 'done'}) + '\n'
+        return
+
     if not context_chunks:
         yield json.dumps({'type': 'sources', 'sources': []}) + '\n'
         yield json.dumps({
@@ -330,9 +503,34 @@ def generate_answer_stream(query_text, context_chunks, location=None, lang=None)
         yield json.dumps({'type': 'done'}) + '\n'
         return
 
+    # Process location coordinates and sort context chunks if it's a proximity query
+    processed_chunks = []
+    for c in context_chunks:
+        processed_chunks.append(dict(c))
+
+    user_lat = location.get('lat') if location else None
+    user_lng = location.get('lng') if location else None
+
+    if user_lat is not None and user_lng is not None:
+        for chunk in processed_chunks:
+            coords = extract_coords(chunk['content'])
+            if coords:
+                c_lat, c_lng = coords
+                dist = haversine_distance(user_lat, user_lng, c_lat, c_lng)
+                chunk['distance'] = dist
+                chunk['content'] = f"[Distance: {dist:.1f} km from user]\n" + chunk['content']
+            else:
+                chunk['distance'] = 999999.0
+
+        if is_near_query(query_text):
+            processed_chunks = sorted(processed_chunks, key=lambda x: x.get('distance', 999999.0))
+
     yield json.dumps({'type': 'sources', 'sources': context_chunks}) + '\n'
 
-    context = '\n\n---\n\n'.join([c['content'] for c in context_chunks])
+    context = ""
+    for idx, c in enumerate(processed_chunks, 1):
+        title = c.get('metadata', {}).get('original_title', 'Untitled')
+        context += f"--- Source {idx}: {title} ---\n{c['content']}\n\n"
 
     system_prompt = f"""You are a Glassdrive customer service assistant. Your ONLY role is to answer questions about Glassdrive services.
 
@@ -353,13 +551,12 @@ CRITICAL RULES:
 4. NO PLACEHOLDERS — NEVER output template text like [Center Name], [Address of Center],
    [City, Country], or any text in square brackets. Use ONLY real data from the context.
    If real data is unavailable, say so plainly (e.g. "Address not listed in our records").
-5. LOCATION PRIVACY:
-   - If GPS coordinates appear in the context, use them ONLY to rank centers by proximity.
-   - NEVER reveal the GPS coordinates or comment on where the user is geographically.
-   - Simply list the relevant Glassdrive centers without geographic commentary.
+5. LOCATION PRIVACY & DISTANCE:
+   - State the center distances to the user (e.g. "12.4 km from you") ONLY if distance metadata (e.g. "[Distance: 12.4 km from user]") is present in the provided Context.
+   - Do NOT invent coordinates, guess locations, or comment on the user's geographic GPS coordinates.
 6. If the question is NOT about Glassdrive, reply ONLY:
    "{OFF_TOPIC.get(lang, OFF_TOPIC['en']).split(chr(10))[0]}"
-7. Answer ONLY using the provided context. Do not invent or assume any information.
+7. Answer ONLY using the provided context. Do NOT invent, assume, or retrieve any information from your pre-training weights (such as other center names, addresses, or cities). If the context does not contain a specific detail (like an address or hours), say so plainly (e.g. "Address not listed in our records").
 8. After every on-topic answer, add follow-up questions in this EXACT format:
 [FOLLOWUPS]
 - <write a real, specific follow-up question about Glassdrive in {lang_name}>
@@ -373,24 +570,8 @@ For example, good follow-ups look like:
 
 Do not write anything after the follow-up questions."""
 
-    # Inject user location as an INTERNAL system note
-    # The model is told to use coordinates for proximity ranking ONLY — never output them
-    location_context = ""
-    if location and isinstance(location, dict):
-        lat = location.get('lat')
-        lng = location.get('lng')
-        if lat is not None and lng is not None:
-            location_context = (
-                f"\n\n[INTERNAL — DO NOT REVEAL TO USER: "
-                f"User GPS = {lat:.5f}, {lng:.5f}. "
-                f"Use ONLY to silently sort/prioritise the nearest Glassdrive centers. "
-                f"Do NOT mention coordinates, do NOT say where the user is, "
-                f"do NOT comment on their geographic location. "
-                f"Just list relevant centers.]"
-            )
-
     user_content = f"""Context:
-{context}{location_context}
+{context}
 
 User question: {query_text}"""
 
@@ -415,7 +596,7 @@ User question: {query_text}"""
                     {"role": "assistant", "content": lang_primer},
                 ],
                 "stream": True,
-                "options": {"temperature": 0.7}
+                "options": {"temperature": 0.0}
             },
             stream=True,
             timeout=120
