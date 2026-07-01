@@ -922,24 +922,30 @@ def get_dynamic_suggestions(context_query=None):
                 context = "\n\n".join([r['content'][:400] for r in relevant]) if relevant else context_query
             except Exception:
                 context = context_query
+                
+            lang = detect_language(context_query)
+            LANG_NAMES = {'en': 'English', 'fr': 'French', 'pt': 'Portuguese'}
+            lang_name = LANG_NAMES.get(lang, 'French')
 
             system_prompt = (
                 "You are a France Pare-Brise customer service assistant. "
                 "Based on the user's last question and the related context below, "
-                "generate exactly 4 short follow-up search queries.\n"
+                f"generate exactly 4 short follow-up search queries in {lang_name}.\n"
                 "CRITICAL REQUIREMENTS:\n"
-                "- ALWAYS respond in the SAME language as the user's last question.\n"
-                "- If the question is in French, all 4 suggestions MUST be in French.\n"
+                f"- ALWAYS respond in {lang_name}. This is mandatory.\n"
                 "- Each suggestion must be a natural, specific follow-up to the user's question.\n"
                 "- Use real center names, services, or details from the context.\n"
                 "- NEVER mention competitor brands. Only France Pare-Brise / Glassdrive.\n"
                 "- Keep each suggestion concise (max 12 words).\n"
                 "- Respond ONLY with a valid JSON object: {\"suggestions\": [\"q1\",\"q2\",\"q3\",\"q4\"]}"
             )
+            
+            # Use English instructions here to not bias the model into French, 
+            # relying on the explicit {lang_name} instruction instead.
             user_content = (
-                f"Dernière question : {context_query}\n\n"
-                f"Contexte associé :\n{context}\n\n"
-                "Réponds UNIQUEMENT avec du JSON valide :\n"
+                f"User's last question: {context_query}\n\n"
+                f"Related context:\n{context}\n\n"
+                "IMPORTANT: Respond ONLY with valid JSON:\n"
                 "{\"suggestions\": [\"q1\", \"q2\", \"q3\", \"q4\"]}"
             )
 
